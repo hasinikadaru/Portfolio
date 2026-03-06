@@ -5,956 +5,346 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hasini Kadaru — Architectural Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --ink:     #1a1814;
-    --mid:     #5a554e;
-    --faint:   #9a948c;
-    --rule:    #ddd9d3;
-    --paper:   #f7f4ef;
-    --warm:    #f0ece4;
-    --accent:  #2a5c8f;
-    --serif:   'Cormorant Garamond', Georgia, serif;
-    --mono:    'DM Mono', monospace;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.4rem 3rem;
-    background: rgba(247, 244, 239, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .nav-name {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  .nav-name span {
-    font-weight: 300;
-    color: var(--accent);
-    font-size: 0.75rem;
-    font-family: var(--mono);
-    margin-left: 0.5rem;
-    letter-spacing: 0.08em;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mid);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--ink); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 5rem;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 5rem 3rem 5rem 3rem;
-    border-right: 1px solid var(--rule);
-  }
-
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-name {
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 0.3rem;
-  }
-
-  .hero-name em {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--mid);
-  }
-
-  .hero-credential {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 2.5rem;
-    margin-top: 0.8rem;
-  }
-
-  .hero-desc {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--mid);
-    max-width: 420px;
-    line-height: 1.75;
-    margin-bottom: 3rem;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  .btn-primary {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--paper);
-    background: var(--ink);
-    padding: 0.85rem 1.8rem;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .btn-primary:hover { background: var(--accent); }
-
-  .btn-secondary {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mid);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .btn-secondary:hover { color: var(--ink); border-color: var(--ink); }
-
-  .hero-right {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    background: var(--warm);
-  }
-
-  .hero-stat-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 3rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .hero-stat-block:last-child { border-bottom: none; }
-
-  .stat-number {
-    font-size: 3.5rem;
-    font-weight: 300;
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-
-  /* ── SECTION SHARED ── */
-  section { padding: 6rem 3rem; }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .section-title {
-    font-size: 0.68rem;
-    font-family: var(--mono);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  .section-count {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    color: var(--faint);
-  }
-
-  /* ── WORK GRID ── */
-  #work { background: var(--paper); }
-
-  .work-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-  }
-
-  .project-card {
-    background: var(--paper);
-    cursor: pointer;
-    overflow: hidden;
-    transition: background 0.3s;
-    position: relative;
-  }
-
-  .project-card:hover { background: var(--warm); }
-
-  .project-card:hover .project-image-placeholder { opacity: 0.85; }
-  .project-card:hover .project-image-placeholder::after { opacity: 1; }
-
-  .project-image-placeholder {
-    width: 100%;
-    aspect-ratio: 4/3;
-    background: var(--warm);
-    position: relative;
-    overflow: hidden;
-    transition: opacity 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Architectural grid pattern for placeholders */
-  .project-image-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--rule) 1px, transparent 1px),
-      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
-    background-size: 32px 32px;
-    opacity: 0.6;
-  }
-
-  .placeholder-label {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-
-  .placeholder-icon {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--faint);
-    margin: 0 auto 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .placeholder-icon svg { width: 22px; height: 22px; stroke: var(--faint); fill: none; }
-
-  .placeholder-text {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-
-  /* When you have a real image — add class .has-image and set background-image */
-  .project-image-placeholder.has-image::before { display: none; }
-  .project-image-placeholder.has-image .placeholder-label { display: none; }
-
-  .project-info {
-    padding: 1.6rem 2rem 2rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .project-meta {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 0.5rem;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .project-title {
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-  }
-
-  .project-desc {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: var(--mid);
-    line-height: 1.65;
-    margin-bottom: 1.2rem;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid rgba(42, 92, 143, 0.25);
-    padding: 0.2rem 0.6rem;
-  }
-
-  /* ── ABOUT ── */
-  #about {
-    background: var(--warm);
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 5rem;
-    align-items: start;
-  }
-
-  .about-left { position: sticky; top: 7rem; }
-
-  .about-photo-placeholder {
-    width: 100%;
-    aspect-ratio: 3/4;
-    background: var(--rule);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .about-photo-placeholder svg { width: 32px; height: 32px; stroke: var(--faint); fill: none; }
-
-  .about-photo-placeholder p {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-
-  .about-name-side {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 0.2rem;
-  }
-
-  .about-title-side {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .about-right h2 {
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 300;
-    line-height: 1.3;
-    color: var(--ink);
-    margin-bottom: 2rem;
-  }
-
-  .about-right h2 em {
-    font-style: italic;
-    color: var(--mid);
-  }
-
-  .about-body {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--mid);
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem 3rem;
-    margin-top: 2.5rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .skill-group-label {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 0.4rem;
-  }
-
-  .skill-group-items {
-    font-size: 0.88rem;
-    color: var(--mid);
-    font-weight: 300;
-    line-height: 1.6;
-  }
-
-  /* ── CONTACT ── */
-  #contact { background: var(--ink); }
-
-  #contact .section-title { color: rgba(247, 244, 239, 0.4); }
-  #contact .section-header { border-color: rgba(247, 244, 239, 0.1); }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-
-  .contact-headline {
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 300;
-    line-height: 1.2;
-    color: var(--paper);
-    margin-bottom: 1.5rem;
-  }
-
-  .contact-headline em { font-style: italic; color: var(--faint); }
-
-  .contact-sub {
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: var(--faint);
-    line-height: 1.75;
-    margin-bottom: 2.5rem;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-
-  .contact-link-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-bottom: 1.2rem;
-    border-bottom: 1px solid rgba(247, 244, 239, 0.08);
-  }
-
-  .contact-link-label {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(247, 244, 239, 0.3);
-    width: 5rem;
-    flex-shrink: 0;
-  }
-
-  .contact-link-value {
-    font-size: 0.95rem;
-    color: var(--paper);
-    text-decoration: none;
-    font-weight: 300;
-    transition: color 0.2s;
-  }
-
-  .contact-link-value:hover { color: rgba(42, 92, 143, 0.9); }
-
-  .contact-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-top: 1rem;
-  }
-
-  .availability-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #6db87a;
-    margin-bottom: 2rem;
-  }
-
-  .availability-badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #6db87a;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .resume-download {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem;
-    border: 1px solid rgba(247, 244, 239, 0.12);
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
-    group: true;
-  }
-
-  .resume-download:hover {
-    border-color: rgba(247, 244, 239, 0.3);
-    background: rgba(247, 244, 239, 0.03);
-  }
-
-  .resume-download-text { }
-
-  .resume-download-label {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(247, 244, 239, 0.3);
-    margin-bottom: 0.3rem;
-  }
-
-  .resume-download-title {
-    font-size: 1rem;
-    color: var(--paper);
-    font-weight: 300;
-  }
-
-  .resume-download-arrow {
-    font-size: 1.2rem;
-    color: rgba(247, 244, 239, 0.3);
-    transition: transform 0.2s, color 0.2s;
-  }
-
-  .resume-download:hover .resume-download-arrow {
-    transform: translateX(4px);
-    color: var(--paper);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    padding: 1.5rem 3rem;
-    border-top: 1px solid rgba(247, 244, 239, 0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  footer p {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: rgba(247, 244, 239, 0.2);
-    text-transform: uppercase;
-  }
-
-  /* ── ANIMATIONS ── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* stagger children */
-  .fade-up:nth-child(1) { transition-delay: 0s; }
-  .fade-up:nth-child(2) { transition-delay: 0.1s; }
-  .fade-up:nth-child(3) { transition-delay: 0.2s; }
-  .fade-up:nth-child(4) { transition-delay: 0.3s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1.5rem; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 3rem 1.5rem; min-height: 90vh; justify-content: center; }
-    section { padding: 4rem 1.5rem; }
-    .work-grid { grid-template-columns: 1fr; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-left { position: static; }
-    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .skills-grid { grid-template-columns: 1fr; }
-  }
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80') center/cover no-repeat;
+  filter: brightness(0.45);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-bg { transform: scale(1.03); }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,24,20,0.92) 0%, rgba(26,24,20,0.2) 60%, transparent 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 3rem 5rem;
+  max-width: 800px;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,.5);
+  margin-bottom: 1rem;
+}
+.hero-name {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--paper);
+  letter-spacing: -.02em;
+  margin-bottom: .4rem;
+}
+.hero-name em { font-style: italic; color: rgba(247,244,239,.6); }
+.hero-credential {
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: rgba(42,92,143,.9);
+  letter-spacing: .1em;
+  margin-bottom: 1.5rem;
+}
+.hero-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(247,244,239,.65);
+  max-width: 480px;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+.hero-stat { }
+.hero-stat-num {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: rgba(247,244,239,.9);
+  letter-spacing: .05em;
+}
+.hero-stat-label {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,.35);
+}
+.hero-cta { display: flex; gap: 1.5rem; align-items: center; }
+.hero-cta .btn-primary { background: rgba(247,244,239,.95); color: var(--ink); }
+.hero-cta .btn-primary:hover { background: var(--accent); color: var(--paper); }
+.hero-cta .btn-secondary { color: rgba(247,244,239,.6); border-color: rgba(247,244,239,.2); }
+.hero-cta .btn-secondary:hover { color: var(--paper); border-color: rgba(247,244,239,.6); }
+
+/* ── FEATURED WORK ── */
+#work { padding: 6rem 3rem; }
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.featured-card {
+  background: var(--paper);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  overflow: hidden;
+  transition: background .3s;
+}
+.featured-card:hover { background: var(--warm); }
+.featured-card:hover .featured-thumb img { transform: scale(1.04); }
+.featured-thumb {
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--warm);
+  position: relative;
+}
+.featured-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.featured-thumb-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: var(--warm);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: .8rem; position: relative; overflow: hidden;
+}
+.featured-thumb-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(var(--rule) 1px,transparent 1px), linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size: 32px 32px; opacity: .6;
+}
+.featured-info { padding: 1.8rem 2rem 2.2rem; border-top: 1px solid var(--rule); }
+.featured-meta { font-family: var(--mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: .5rem; }
+.featured-title { font-size: 1.4rem; font-weight: 400; color: var(--ink); margin-bottom: .5rem; line-height: 1.2; }
+.featured-desc { font-size: .9rem; font-weight: 300; color: var(--mid); line-height: 1.65; margin-bottom: 1.2rem; }
+.featured-arrow { font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.featured-card:hover .featured-arrow::after { content: ' →'; }
+
+/* ── ABOUT STRIP ── */
+#about-strip {
+  background: var(--ink);
+  padding: 5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.about-strip-left h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 300;
+  color: var(--paper);
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+.about-strip-left h2 em { font-style: italic; color: rgba(247,244,239,.4); }
+.about-strip-left p { font-size: .95rem; font-weight: 300; color: rgba(247,244,239,.55); line-height: 1.8; margin-bottom: 2rem; }
+.about-strip-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+.strip-skill-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(247,244,239,.25); margin-bottom: .3rem; }
+.strip-skill-val { font-size: .88rem; color: rgba(247,244,239,.65); font-weight: 300; line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .hero-content { padding: 0 1.5rem 3rem; }
+  #work { padding: 4rem 1.5rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  #about-strip { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- ── NAV ──────────────────────────────────────────────────────────────── -->
 <nav>
-  <a href="#" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
+  <a href="index.html" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
   <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
-<section class="hero" id="home">
-  <div class="hero-left">
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
     <p class="hero-eyebrow">Architectural Designer · Rochester, NY</p>
     <h1 class="hero-name">Hasini<br><em>Kadaru</em></h1>
     <p class="hero-credential">Certified Passive House Consultant · CPHC</p>
-    <p class="hero-desc">
-      Revit-based construction documentation, existing-condition modeling, and coordinated permit sets — with a technical foundation in passive house performance and envelope detailing.
-    </p>
+    <p class="hero-desc">Revit-based construction documentation, adaptive reuse, and passive house performance — bridging technical precision with energy-conscious design.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">223 hrs</div>
+        <div class="hero-stat-label">Production documentation</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">15+ packages</div>
+        <div class="hero-stat-label">Coordinated drawing sets</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">CPHC</div>
+        <div class="hero-stat-label">Passive house certified</div>
+      </div>
+    </div>
     <div class="hero-cta">
-      <a href="#work" class="btn-primary">View Work</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-stat-block">
-      <div class="stat-number">223</div>
-      <div class="stat-label">Hours of production documentation</div>
-    </div>
-    <div class="hero-stat-block">
-      <div class="stat-number">15+</div>
-      <div class="stat-label">Coordinated drawing packages delivered</div>
+      <a href="work.html" class="btn-primary">View Work</a>
+      <a href="contact.html" class="btn-secondary">Get in Touch</a>
     </div>
   </div>
 </section>
 
-<!-- ── WORK ─────────────────────────────────────────────────────────────── -->
+<!-- ── FEATURED WORK ── -->
 <section id="work">
   <div class="section-header">
-    <span class="section-title">Selected Work</span>
-    <span class="section-count">— Northline Architects Internship, 2025</span>
+    <span class="section-title">Featured Work</span>
+    <span class="section-count">— Selected projects</span>
   </div>
 
-  <div class="work-grid">
+  <div class="featured-grid">
 
-    <!-- Project 1: Taft Aesthetics -->
-    <div class="project-card fade-up">
-      <div class="project-image-placeholder">
-        <!-- REPLACE: add class "has-image" and style="background-image:url('your-image.jpg'); background-size:cover; background-position:center;" -->
-        <div class="placeholder-label">
-          <div class="placeholder-icon">
-            <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-          </div>
-          <p class="placeholder-text">Add drawing image</p>
+    <!-- 1. Taft Aesthetics -->
+    <a href="project-taft.html" class="featured-card fade-up">
+      <div class="featured-thumb-placeholder">
+        <div class="placeholder-icon" style="position:relative;z-index:1;">
+          <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         </div>
+        <p class="placeholder-text" style="position:relative;z-index:1;">Add project image</p>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span>Commercial Interior</span>
-          <span>2025</span>
-          <span>18+ hrs</span>
-        </div>
-        <h3 class="project-title">Taft Aesthetics</h3>
-        <p class="project-desc">Full commercial construction documentation set including life safety plan, foundation plan, roof plan, door schedules, sections, elevations, and enlarged bathroom details. Delivered across multiple revision cycles with sauna and ventilation coordination.</p>
-        <div class="project-tags">
-          <span class="tag">Revit</span>
-          <span class="tag">CAD</span>
-          <span class="tag">Life Safety</span>
-          <span class="tag">CD Set</span>
-          <span class="tag">Interior</span>
-        </div>
+      <div class="featured-info">
+        <div class="featured-meta">Commercial Interior · Northline Architects · 2025</div>
+        <h3 class="featured-title">Taft Aesthetics</h3>
+        <p class="featured-desc">Full commercial CD set — life safety, foundation, roof plans, door schedules, sections, elevations, and enlarged bathroom details across multiple revision cycles.</p>
+        <span class="featured-arrow">View Project</span>
       </div>
-    </div>
+    </a>
 
-    <!-- Project 2: Kang Law Firm -->
-    <div class="project-card fade-up">
-      <div class="project-image-placeholder">
-        <div class="placeholder-label">
-          <div class="placeholder-icon">
-            <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-          </div>
-          <p class="placeholder-text">Add drawing image</p>
+    <!-- 2. CBNA Monroe -->
+    <a href="project-cbna.html" class="featured-card fade-up">
+      <div class="featured-thumb-placeholder">
+        <div class="placeholder-icon" style="position:relative;z-index:1;">
+          <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         </div>
+        <p class="placeholder-text" style="position:relative;z-index:1;">Add project image</p>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span>Commercial Interior</span>
-          <span>2025</span>
-          <span>21+ hrs</span>
-        </div>
-        <h3 class="project-title">Kang Law Firm</h3>
-        <p class="project-desc">Full commercial interior renovation in Revit — demo plans, proposed plans, construction set, attic plan, and sheet coordination. Developed across multiple sessions from initial layout through final construction documentation package.</p>
-        <div class="project-tags">
-          <span class="tag">Revit</span>
-          <span class="tag">Demo Plans</span>
-          <span class="tag">Construction Set</span>
-          <span class="tag">Commercial</span>
-        </div>
+      <div class="featured-info">
+        <div class="featured-meta">Commercial Renovation · Northline Architects · 2025</div>
+        <h3 class="featured-title">CBNA 3300 Monroe</h3>
+        <p class="featured-desc">Community bank renovation with two on-site field measurement visits. Ground floor redesign in Revit from verified existing conditions — the only field-verified project in the internship.</p>
+        <span class="featured-arrow">View Project</span>
       </div>
-    </div>
+    </a>
 
-    <!-- Project 3: CBNA 3300 Monroe -->
-    <div class="project-card fade-up">
-      <div class="project-image-placeholder">
-        <div class="placeholder-label">
-          <div class="placeholder-icon">
-            <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-          </div>
-          <p class="placeholder-text">Add drawing image</p>
+    <!-- 3. Vester Pool House -->
+    <a href="project-vester.html" class="featured-card fade-up">
+      <div class="featured-thumb-placeholder">
+        <div class="placeholder-icon" style="position:relative;z-index:1;">
+          <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         </div>
+        <p class="placeholder-text" style="position:relative;z-index:1;">Add project image</p>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span>Commercial Renovation</span>
-          <span>2025</span>
-          <span>Field Verified</span>
-        </div>
-        <h3 class="project-title">CBNA 3300 Monroe</h3>
-        <p class="project-desc">Community bank renovation with two on-site field measurement visits to verify existing layout conditions. Developed ground floor redesign in Revit from field data, coordinating new layout against verified existing conditions.</p>
-        <div class="project-tags">
-          <span class="tag">Revit</span>
-          <span class="tag">Field Measurement</span>
-          <span class="tag">Site Visit</span>
-          <span class="tag">Renovation</span>
-        </div>
+      <div class="featured-info">
+        <div class="featured-meta">Residential · Northline Architects · 2025</div>
+        <h3 class="featured-title">Vester Pool House</h3>
+        <p class="featured-desc">Complete residential drawing set — foundation plan, floor plan, roof plan, wall sections, and exterior elevations. Developed from initial markups through final CAD and PDF submission.</p>
+        <span class="featured-arrow">View Project</span>
       </div>
-    </div>
+    </a>
 
-    <!-- Project 4: Brown Residence -->
-    <div class="project-card fade-up">
-      <div class="project-image-placeholder">
-        <div class="placeholder-label">
-          <div class="placeholder-icon">
-            <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-          </div>
-          <p class="placeholder-text">Add drawing image</p>
+    <!-- 4. Park Theatre -->
+    <a href="project-park.html" class="featured-card fade-up">
+      <div class="featured-thumb-placeholder">
+        <div class="placeholder-icon" style="position:relative;z-index:1;">
+          <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         </div>
+        <p class="placeholder-text" style="position:relative;z-index:1;">Add project image</p>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span>Residential</span>
-          <span>2025</span>
-          <span>14+ hrs</span>
-        </div>
-        <h3 class="project-title">Brown Residence</h3>
-        <p class="project-desc">Full Revit workflow from sketch to presentation — floor plans developed from architect sketches through proposed layout with furniture, finishing with 3D modeling. Demonstrates end-to-end documentation and design development capability.</p>
-        <div class="project-tags">
-          <span class="tag">Revit</span>
-          <span class="tag">3D Modeling</span>
-          <span class="tag">Residential</span>
-          <span class="tag">Design Development</span>
-        </div>
+      <div class="featured-info">
+        <div class="featured-meta">Adaptive Reuse · RIT Academic · 2024</div>
+        <h3 class="featured-title">Park Theatre Adaptive Reuse</h3>
+        <p class="featured-desc">Historic theatre adaptive reuse with coordinated Revit documentation sheets and daylight analysis to inform passive and sustainable design strategies.</p>
+        <span class="featured-arrow">View Project</span>
       </div>
-    </div>
+    </a>
 
+  </div>
+
+  <div style="text-align:center; margin-top:3rem;">
+    <a href="work.html" class="btn-primary">View All Work</a>
   </div>
 </section>
 
-<!-- ── ABOUT ─────────────────────────────────────────────────────────────── -->
-<section id="about">
-  <div class="section-header">
-    <span class="section-title">About</span>
+<!-- ── ABOUT STRIP ── -->
+<section id="about-strip">
+  <div class="about-strip-left">
+    <h2>Documentation-focused designer with a <em>performance-first</em> foundation.</h2>
+    <p>Architectural designer with hands-on experience in Revit-based construction documentation for residential renovations, additions, and small commercial interiors. Certified Passive House Consultant (CPHC) with technical knowledge of envelope performance and energy-conscious design.</p>
+    <a href="about.html" class="btn-primary">About Me</a>
   </div>
-  <div class="about-grid">
-    <div class="about-left">
-      <div class="about-photo-placeholder">
-        <!-- REPLACE: swap this div for <img src="your-photo.jpg" style="width:100%;aspect-ratio:3/4;object-fit:cover;"> -->
-        <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        <p>Add photo</p>
-      </div>
-      <p class="about-name-side">Hasini Kadaru</p>
-      <p class="about-title-side">Architectural Designer · CPHC</p>
-    </div>
-    <div class="about-right">
-      <h2>Documentation-focused designer with a <em>performance-first</em> technical foundation.</h2>
-      <p class="about-body">
-        I'm an architectural designer with hands-on experience producing Revit-based construction documentation for residential renovations, additions, and small commercial interiors. My work centers on translating survey drawings, legacy blueprints, and architect sketches into coordinated permit sets — and ensuring those sets stay accurate through redline integration and revision cycles.
-      </p>
-      <p class="about-body">
-        As a Certified Passive House Consultant (CPHC), I bring technical knowledge of building envelope performance, airtight detailing, and energy-conscious design into every documentation decision I make. I'm completing my Master of Architecture at Rochester Institute of Technology and am actively seeking Architectural Designer I, Junior Designer, and Intern Architect roles.
-      </p>
-      <div class="skills-grid">
-        <div>
-          <p class="skill-group-label">BIM & Documentation</p>
-          <p class="skill-group-items">Revit, AutoCAD, Bluebeam</p>
-        </div>
-        <div>
-          <p class="skill-group-label">Visualization</p>
-          <p class="skill-group-items">SketchUp, Enscape, Lumion</p>
-        </div>
-        <div>
-          <p class="skill-group-label">Performance Analysis</p>
-          <p class="skill-group-items">Cove.Tool, Climate Consultant</p>
-        </div>
-        <div>
-          <p class="skill-group-label">Design Tools</p>
-          <p class="skill-group-items">Adobe Creative Suite, Microsoft Office</p>
-        </div>
-        <div>
-          <p class="skill-group-label">Education</p>
-          <p class="skill-group-items">MArch, RIT · BArch, Sri Venkateshwara</p>
-        </div>
-        <div>
-          <p class="skill-group-label">Certification</p>
-          <p class="skill-group-items">Phius CPHC · Passive House</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ───────────────────────────────────────────────────────────── -->
-<section id="contact">
-  <div class="section-header">
-    <span class="section-title">Contact</span>
-  </div>
-  <div class="contact-grid">
+  <div class="about-strip-right">
     <div>
-      <p class="availability-badge">Available for full-time roles</p>
-      <h2 class="contact-headline">Let's build<br><em>something</em><br>together.</h2>
-      <p class="contact-sub">Open to Architectural Designer I, Junior Designer, and Intern Architect positions. Available for on-site, hybrid, and remote roles. Open to relocation.</p>
-      <div class="contact-links">
-        <div class="contact-link-row">
-          <span class="contact-link-label">Email</span>
-          <a href="mailto:hasinikadaru2369@gmail.com" class="contact-link-value">hasinikadaru2369@gmail.com</a>
-        </div>
-        <div class="contact-link-row">
-          <span class="contact-link-label">LinkedIn</span>
-          <a href="https://linkedin.com/in/hasinikadaru" target="_blank" class="contact-link-value">linkedin.com/in/hasinikadaru</a>
-        </div>
-        <div class="contact-link-row">
-          <span class="contact-link-label">Phone</span>
-          <a href="tel:5859817289" class="contact-link-value">585-981-7289</a>
-        </div>
-        <div class="contact-link-row">
-          <span class="contact-link-label">Location</span>
-          <span class="contact-link-value" style="cursor:default;">Rochester, NY · Open to relocation</span>
-        </div>
-      </div>
+      <div class="strip-skill-label">BIM & Documentation</div>
+      <div class="strip-skill-val">Revit, AutoCAD, Bluebeam</div>
     </div>
-    <div class="contact-right">
-      <a href="#" class="resume-download">
-        <!-- UPDATE href to your actual resume PDF link when uploaded to Google Drive -->
-        <div class="resume-download-text">
-          <p class="resume-download-label">Download</p>
-          <p class="resume-download-title">Resume — Hasini Kadaru</p>
-        </div>
-        <span class="resume-download-arrow">→</span>
-      </a>
-      <a href="#" class="resume-download">
-        <!-- UPDATE href to your portfolio PDF link when ready -->
-        <div class="resume-download-text">
-          <p class="resume-download-label">Download</p>
-          <p class="resume-download-title">Portfolio PDF — Selected Work</p>
-        </div>
-        <span class="resume-download-arrow">→</span>
-      </a>
+    <div>
+      <div class="strip-skill-label">Visualization</div>
+      <div class="strip-skill-val">SketchUp, Enscape, Lumion</div>
+    </div>
+    <div>
+      <div class="strip-skill-label">Performance</div>
+      <div class="strip-skill-val">Cove.Tool, Climate Consultant</div>
+    </div>
+    <div>
+      <div class="strip-skill-label">Certification</div>
+      <div class="strip-skill-val">Phius CPHC · Passive House</div>
+    </div>
+    <div>
+      <div class="strip-skill-label">Education</div>
+      <div class="strip-skill-val">MArch, RIT · BArch, Sri Venkateshwara</div>
+    </div>
+    <div>
+      <div class="strip-skill-label">Location</div>
+      <div class="strip-skill-val">Rochester, NY · Open to relocation</div>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ────────────────────────────────────────────────────────────── -->
 <footer>
   <p>© 2026 Hasini Kadaru</p>
   <p>www.hasinikadaru.com</p>
 </footer>
 
 <script>
-  // Fade-up on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-      if (el.isIntersecting) {
-        el.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  // Smooth active nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--ink)' : '';
-    });
-  });
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === `#${current}`); });
+});
 </script>
 </body>
 </html>

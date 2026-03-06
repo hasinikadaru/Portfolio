@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Housing Complex — Hasini Kadaru</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+main{padding-top:5rem;}
+.project-hero img{width:100%;aspect-ratio:21/9;object-fit:cover;display:block;}
+.project-header{padding:3.5rem 3rem 2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;border-bottom:1px solid var(--rule);}
+.project-category{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
+.project-title{font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.05;margin-bottom:1rem;}
+.project-subtitle{font-size:1rem;font-weight:300;color:var(--mid);max-width:560px;line-height:1.7;}
+.project-specs{display:grid;gap:.8rem;text-align:right;min-width:180px;}
+.spec-label{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+.spec-val{font-size:.88rem;color:var(--ink);font-weight:400;}
+.project-body{display:grid;grid-template-columns:1fr 2.5fr;gap:0;border-bottom:1px solid var(--rule);}
+.project-sidebar{padding:3rem;border-right:1px solid var(--rule);}
+.sidebar-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;display:block;}
+.sidebar-val{font-size:.88rem;color:var(--mid);margin-bottom:1.8rem;line-height:1.6;}
+.tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(42,92,143,.2);padding:.2rem .6rem;display:inline-block;margin:.2rem .2rem 0 0;}
+.project-description{padding:3rem;}
+.project-description h2{font-size:1.4rem;font-weight:400;margin-bottom:1rem;}
+.project-description p{font-size:.95rem;font-weight:300;color:var(--mid);line-height:1.85;margin-bottom:1.2rem;}
+.project-description h3{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:2rem 0 .6rem;}
+.drawing-gallery{padding:4rem 3rem;}
+.gallery-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;}
+.gallery-label::after{content:'';flex:1;height:1px;background:var(--rule);}
+.gallery-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:1px;}
+.gallery-grid-1{display:grid;grid-template-columns:1fr;border:1px solid var(--rule);margin-bottom:1px;}
+.gallery-item{background:var(--paper);overflow:hidden;}
+.gallery-item img{width:100%;display:block;object-fit:contain;background:white;padding:.5rem;}
+.gallery-caption{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.8rem 1rem;border-top:1px solid var(--rule);}
+.project-nav{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rule);}
+.proj-nav-item{padding:2rem 3rem;text-decoration:none;color:inherit;transition:background .3s;display:block;}
+.proj-nav-item:hover{background:var(--warm);}
+.proj-nav-item+.proj-nav-item{border-left:1px solid var(--rule);}
+.proj-nav-dir{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:.4rem;}
+.proj-nav-title{font-size:1.1rem;font-weight:400;color:var(--ink);}
+@media(max-width:768px){.project-header{grid-template-columns:1fr;}.project-specs{text-align:left;}.project-body{grid-template-columns:1fr;}.project-sidebar{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}.project-description,.drawing-gallery{padding:2rem 1.5rem;}.gallery-grid-2{grid-template-columns:1fr;}.project-nav{grid-template-columns:1fr;}.proj-nav-item+.proj-nav-item{border-left:none;border-top:1px solid var(--rule);}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
+  <ul class="nav-links">
+    <li><a href="work.html" class="active">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<main>
+  <div class="project-hero">
+    <img src="images/dormitory_hero.jpg" alt="Student Housing Complex exterior render — Minority Residential School for Boys, Mahabubnagar">
+  </div>
+  <div class="project-header">
+    <div>
+      <p class="project-category">Institutional · Student Housing · Sri Venkateshwara College of Architecture · 2019</p>
+      <h1 class="project-title">Student Housing Complex</h1>
+      <p class="project-subtitle">Minority Residential School Complex for Boys at Mahabubnagar District — high-density student housing with modular room planning, centralized social spaces, structured residential organization, and shared dining and recreation facilities across four floors.</p>
+    </div>
+    <div class="project-specs">
+      <div><div class="spec-label">Year</div><div class="spec-val">2019</div></div>
+      <div><div class="spec-label">Building Width</div><div class="spec-val">52.46m × 30.08m</div></div>
+      <div><div class="spec-label">Floors</div><div class="spec-val">G + 3 floors</div></div>
+    </div>
+  </div>
+  <div class="project-body">
+    <aside class="project-sidebar">
+      <span class="sidebar-label">Role</span>
+      <div class="sidebar-val">Designer — full drawing set including floor plans across all levels and exterior renders</div>
+      <span class="sidebar-label">Scope</span>
+      <div class="sidebar-val">Ground floor (dining, services), First floor (dormitory rooms + recreation room + terrace), Second floor (dormitory rooms + reading room), Third floor (dormitory rooms)</div>
+      <span class="sidebar-label">Skills</span>
+      <div>
+        <span class="tag">Institutional Design</span>
+        <span class="tag">High-Density Residential</span>
+        <span class="tag">Modular Planning</span>
+        <span class="tag">CAD</span>
+        <span class="tag">3D Rendering</span>
+        <span class="tag">Floor Plans</span>
+      </div>
+    </aside>
+    <div class="project-description">
+      <h2>Project Overview</h2>
+      <p>The Student Housing Complex was designed for the Construction of a Minority Residential School Complex for Boys at Mahabubnagar District — a real-program project requiring structured, high-density residential accommodation with shared dining, recreation, and study facilities.</p>
+      <p>The building footprint of 52.46m × 30.08m is organized around a central spine connecting two residential wings on each floor. The symmetrical plan creates clear wayfinding while maximizing room capacity within each wing.</p>
+      <h3>Ground Floor</h3>
+      <p>The ground floor is organized around a large central dining hall (24,100 × 7,000) with full kitchen, service counter, and storage facilities including dry store, wet store, and cylinder store. A prayer room, warden's room, office spaces, and entry lobby complete the ground level program. Two staircases provide vertical circulation at each end of the central connector.</p>
+      <h3>Upper Floors</h3>
+      <p>Floors one through three follow a consistent dormitory room layout — student rooms (1000 × 5000) arranged in double-loaded corridors with shared bathroom facilities at each wing. The first floor includes a Recreation Room and Terrace above the central dining hall, creating a shared social amenity at the building's center. The second floor adds a Reading Room in the same central position.</p>
+    </div>
+  </div>
+  <div class="drawing-gallery">
+    <div class="gallery-label">Drawing Gallery</div>
+    <div class="gallery-grid-1">
+      <div class="gallery-item">
+        <img src="images/dormitory_hero.jpg" alt="Exterior render — Student Housing Complex">
+        <div class="gallery-caption">Exterior Render — Front Perspective</div>
+      </div>
+    </div>
+    <div class="gallery-grid-2">
+      <div class="gallery-item">
+        <img src="images/dormitory_ground.jpg" alt="Ground Floor Plan">
+        <div class="gallery-caption">Ground Floor Plan — Dining, Services & Entry</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/dormitory_first.jpg" alt="First Floor Plan">
+        <div class="gallery-caption">First Floor Plan — Dormitory Rooms + Recreation + Terrace</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/dormitory_second.jpg" alt="Second Floor Plan">
+        <div class="gallery-caption">Second Floor Plan — Dormitory Rooms + Reading Room</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/dormitory_third.jpg" alt="Third Floor Plan">
+        <div class="gallery-caption">Third Floor Plan — Dormitory Rooms</div>
+      </div>
+    </div>
+  </div>
+  <nav class="project-nav">
+    <a href="project-thesis.html" class="proj-nav-item">
+      <div class="proj-nav-dir">← Previous</div>
+      <div class="proj-nav-title">Telangana Traditional Resort</div>
+    </a>
+    <a href="project-3bhk.html" class="proj-nav-item" style="text-align:right;">
+      <div class="proj-nav-dir">Next Project →</div>
+      <div class="proj-nav-title">3BHK Residential Flats</div>
+    </a>
+  </nav>
+</main>
+<footer>
+  <p>© 2026 Hasini Kadaru</p>
+  <p>www.hasinikadaru.com</p>
+</footer>
+</body>
+</html>
