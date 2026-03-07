@@ -138,7 +138,7 @@
 }
 .featured-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0;
   border: 1px solid var(--rule);
   max-width: 1200px;
@@ -151,10 +151,9 @@
   overflow: hidden;
   transition: background .3s;
   border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: none;
 }
-.featured-card:nth-child(even) { border-right: none; }
-.featured-card:nth-child(3), .featured-card:nth-child(4) { border-bottom: none; }
+.featured-card:last-child { border-right: none; }
 .featured-card:hover { background: var(--warm); }
 .featured-card:hover .featured-thumb img { transform: scale(1.04); }
 .featured-thumb {
@@ -331,9 +330,16 @@
 .success-msg { display: none; margin-top: 1rem; padding: 1rem; background: var(--warm); border: 1px solid var(--rule); }
 .success-msg p { font-family: var(--sans); font-size: .9rem; color: #4a9a6a; font-weight: 500; }
 
+@media (max-width: 1000px) {
+  .featured-grid { grid-template-columns: 1fr 1fr; }
+  .featured-card:nth-child(2) { border-right: none; }
+  .featured-card:nth-child(3) { border-right: none; border-top: 1px solid var(--rule); }
+}
 @media (max-width: 900px) {
   #work { padding: 4rem 1.5rem; }
   .featured-grid { grid-template-columns: 1fr; }
+  .featured-card { border-right: none; border-bottom: 1px solid var(--rule); }
+  .featured-card:last-child { border-bottom: none; }
   .about-home-inner, .contact-home-inner { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
   #about-home, #contact-home { padding: 4rem 1.5rem; }
   .hero-stats { gap: 2rem; }
@@ -421,16 +427,6 @@
       </div>
     </a>
 
-    <a href="project-park.html" class="featured-card fade-up">
-      <div class="featured-thumb-ph"><span>Add project image</span></div>
-      <div class="featured-info">
-        <div class="featured-meta">Adaptive Reuse · RIT Academic · 2024</div>
-        <h3 class="featured-title">Park Theatre Adaptive Reuse</h3>
-        <p class="featured-desc">Historic theatre adaptive reuse with coordinated Revit documentation sheets and daylight analysis to inform passive and sustainable design strategies.</p>
-        <span class="featured-arrow">View Project</span>
-      </div>
-    </a>
-
   </div>
 
   <div style="text-align:center; margin-top:3rem;">
@@ -488,7 +484,7 @@
       <p class="contact-home-body">I'm actively looking for full-time positions in architectural design and construction documentation — particularly at firms working in renovation, residential, or high-performance sustainable building types. Available from May 2026.</p>
       <div class="contact-detail-item">
         <div class="contact-detail-label">Email</div>
-        <a href="mailto:hasinikadaru2369@gmail.com" class="contact-detail-val">hasinikadaru2369@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#ee868f9d878087858f8a8f9c9bdcddd8d7ae89838f8782c08d8183" class="contact-detail-val"><span class="__cf_email__" data-cfemail="b4dcd5c7dddadddfd5d0d5c6c18687828df4d3d9d5ddd89ad7dbd9">[email&#160;protected]</span></a>
       </div>
       <div class="contact-detail-item">
         <div class="contact-detail-label">LinkedIn</div>
@@ -523,7 +519,7 @@
   <p>www.hasinikadaru.com</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
 }, { threshold: 0.08 });
@@ -531,10 +527,4 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 // Formspree AJAX
 const form = document.querySelector('.contact-form-home');
-const successMsg = document.getElementById('successMsg');
-if(form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('.btn-submit-home');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
+c
