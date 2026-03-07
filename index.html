@@ -120,7 +120,7 @@
 .hero-cta .btn-primary:hover { background: var(--accent); color: var(--paper); }
 
 /* ── FEATURED WORK ── */
-#work { padding: 6rem 3rem; }
+#work { padding: 6rem 3rem; background: var(--paper); }
 .featured-section-title {
   font-family: var(--sans);
   font-size: 1.5rem;
@@ -139,9 +139,9 @@
 .featured-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--rule);
+  gap: 0;
   border: 1px solid var(--rule);
+  max-width: 1200px;
 }
 .featured-card {
   background: var(--paper);
@@ -150,7 +150,11 @@
   display: block;
   overflow: hidden;
   transition: background .3s;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
 }
+.featured-card:nth-child(even) { border-right: none; }
+.featured-card:nth-child(3), .featured-card:nth-child(4) { border-bottom: none; }
 .featured-card:hover { background: var(--warm); }
 .featured-card:hover .featured-thumb img { transform: scale(1.04); }
 .featured-thumb {
@@ -441,7 +445,10 @@
       <div class="about-home-label">About</div>
       <h2 class="about-home-heading">Documentation-focused designer with a <em>performance-first</em> foundation.</h2>
       <p class="about-home-body">Architectural designer with hands-on experience in Revit-based construction documentation for residential renovations, additions, and commercial interiors. Certified Passive House Consultant (CPHC) with technical knowledge of envelope performance and energy-conscious design. Graduating May 2026 from RIT's Golisano Institute for Sustainability.</p>
-      <a href="resume.pdf" target="_blank" class="btn-primary">Download Resume</a>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+        <a href="about.html" class="btn-primary">Full Bio</a>
+        <a href="resume.pdf" target="_blank" style="font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,239,.6);text-decoration:none;border-bottom:1px solid rgba(247,244,239,.2);padding-bottom:2px;">Download Resume</a>
+      </div>
     </div>
     <div class="skills-grid-home">
       <div>
@@ -481,7 +488,7 @@
       <p class="contact-home-body">I'm actively looking for full-time positions in architectural design and construction documentation — particularly at firms working in renovation, residential, or high-performance sustainable building types. Available from May 2026.</p>
       <div class="contact-detail-item">
         <div class="contact-detail-label">Email</div>
-        <a href="/cdn-cgi/l/email-protection#137b72607a7d7a7872777261662120252a53747e727a7f3d707c7e" class="contact-detail-val"><span class="__cf_email__" data-cfemail="0f676e7c666166646e6b6e7d7a3d3c39364f68626e6663216c6062">[email&#160;protected]</span></a>
+        <a href="mailto:hasinikadaru2369@gmail.com" class="contact-detail-val">hasinikadaru2369@gmail.com</a>
       </div>
       <div class="contact-detail-item">
         <div class="contact-detail-label">LinkedIn</div>
@@ -516,7 +523,7 @@
   <p>www.hasinikadaru.com</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
 }, { threshold: 0.08 });
