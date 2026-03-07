@@ -54,7 +54,7 @@
   letter-spacing: -.02em;
   margin-bottom: .6rem;
 }
-.hero-name em { font-style: italic; color: var(--faint); }
+.hero-name em { font-style: italic; color: #3a3630; }
 .hero-credential {
   font-family: var(--sans);
   font-size: 1rem;
@@ -349,7 +349,7 @@
     <li><a href="work.html">Work</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="resume.pdf" target="_blank" style="color:var(--accent);font-weight:600;">Resume</a></li>
+    <li><a href="resume.pdf" download style="color:var(--ink);font-weight:600;">Resume</a></li>
   </ul>
 </nav>
 
@@ -360,8 +360,8 @@
   <div class="hero-content">
     <p class="hero-eyebrow">Architectural Designer &nbsp;·&nbsp; CPHC</p>
     <h1 class="hero-name">Hasini <em>Kadaru</em></h1>
-    <p class="hero-tagline">Revit documentation. Construction documents. Passive house performance.</p>
-    <p class="hero-value">I bridge design intent and technical execution — from Revit modeling and permit-ready documentation to passive house performance standards.</p>
+    <p class="hero-tagline">Revit documentation. Construction documents. Passive house detailing.</p>
+    <p class="hero-value">I bridge design intent and technical execution — from existing condition modeling to coordinated, permit-ready construction documents.</p>
     <p class="hero-location">Rochester, NY &nbsp;·&nbsp; Graduating May 2026 &nbsp;·&nbsp; Open to Relocation</p>
     <div class="hero-stats">
       <div class="hero-stat">
@@ -374,7 +374,7 @@
       </div>
       <div class="hero-stat">
         <span class="hero-stat-num">CPHC</span>
-        <span class="hero-stat-label">PHI Certified Designer</span>
+        <span class="hero-stat-label">Certified Passive House Consultant</span>
       </div>
     </div>
     <div class="hero-cta">
@@ -387,7 +387,7 @@
 <!-- ── FEATURED WORK ── -->
 <section id="work">
   <div class="featured-section-title">Featured Work</div>
-  <div class="featured-section-sub">Selected projects from professional practice and graduate study</div>
+  <div class="featured-section-sub">Construction documentation. Adaptive reuse. Residential design.</div>
 
   <div class="featured-grid">
 
@@ -401,12 +401,12 @@
       </div>
     </a>
 
-    <a href="project-cbna.html" class="featured-card fade-up">
+    <a href="project-kang.html" class="featured-card fade-up">
       <div class="featured-thumb-ph"><span>Add project image</span></div>
       <div class="featured-info">
-        <div class="featured-meta">Commercial Renovation · Northline Architects · 2025</div>
-        <h3 class="featured-title">CBNA 3300 Monroe</h3>
-        <p class="featured-desc">Community bank renovation with two on-site field measurement visits. Ground floor redesign in Revit from verified existing conditions.</p>
+        <div class="featured-meta">Commercial Interior · Northline Architects · 2025</div>
+        <h3 class="featured-title">Kang Law Firm</h3>
+        <p class="featured-desc">Commercial interior renovation — Revit documentation for a law office fit-out including space planning, reflected ceiling plans, and permit-ready drawing set.</p>
         <span class="featured-arrow">View Project</span>
       </div>
     </a>
@@ -444,10 +444,10 @@
     <div>
       <div class="about-home-label">About</div>
       <h2 class="about-home-heading">Documentation-focused designer with a <em>performance-first</em> foundation.</h2>
-      <p class="about-home-body">Architectural designer with hands-on experience in Revit-based construction documentation for residential renovations, additions, and commercial interiors. Certified Passive House Consultant (CPHC) with technical knowledge of envelope performance and energy-conscious design. Graduating May 2026 from RIT's Golisano Institute for Sustainability.</p>
+      <p class="about-home-body">Architectural designer with hands-on experience in Revit-based construction documentation for residential renovations, additions, and commercial interiors. Certified Passive House Consultant (CPHC) with technical knowledge of envelope performance, airtight detailing, and energy-conscious documentation. Graduating May 2026 from RIT's Golisano Institute for Sustainability.</p>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
         <a href="about.html" class="btn-primary">Full Bio</a>
-        <a href="resume.pdf" target="_blank" style="font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,239,.6);text-decoration:none;border-bottom:1px solid rgba(247,244,239,.2);padding-bottom:2px;">Download Resume</a>
+        <a href="resume.pdf" download style="font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,239,.6);text-decoration:none;border-bottom:1px solid rgba(247,244,239,.2);padding-bottom:2px;">Download Resume</a>
       </div>
     </div>
     <div class="skills-grid-home">
@@ -461,15 +461,15 @@
       </div>
       <div>
         <div class="skill-home-label">Performance</div>
-        <div class="skill-home-val">PHIUS CPHC · Cove.Tool · Climate Consultant · THERM</div>
+        <div class="skill-home-val">Cove.Tool · Climate Consultant · THERM</div>
       </div>
       <div>
         <div class="skill-home-label">Certification</div>
-        <div class="skill-home-val">Phius CPHC · Passive House</div>
+        <div class="skill-home-val">CPHC · Passive House Institute</div>
       </div>
       <div>
         <div class="skill-home-label">Education</div>
-        <div class="skill-home-val">MArch, RIT · BArch, Sri Venkateshwara</div>
+        <div class="skill-home-val">M.Arch, RIT &nbsp;·&nbsp; B.Arch, Sri Venkateshwara</div>
       </div>
       <div>
         <div class="skill-home-label">Location</div>
@@ -538,12 +538,3 @@ if(form) {
     const btn = form.querySelector('.btn-submit-home');
     btn.textContent = 'Sending...';
     btn.disabled = true;
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST', body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if(res.ok) {
-        form.reset();
-        successMsg.style.display = 'block';
-      
