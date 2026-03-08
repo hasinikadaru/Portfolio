@@ -83,13 +83,13 @@ main { padding-top: 5.2rem; }
 .page-disclaimer p { font-family:var(--mono); font-size:.75rem; letter-spacing:.07em; color:var(--faint); line-height:1.8; font-style:italic; max-width:720px; }
 
 /* ── BOTTOM PROJECT NAV ── */
-.project-nav { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--rule); }
-.proj-nav-item { padding:2rem 3rem; text-decoration:none; color:inherit; transition:background .3s; display:block; }
-.proj-nav-item:hover { background:var(--warm); }
-.proj-nav-item + .proj-nav-item { border-left:1px solid var(--rule); }
-.proj-nav-dir { font-family:var(--mono); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:.4rem; }
-.proj-nav-title { font-size:1.25rem; font-weight:400; color:var(--ink); }
-
+.project-nav { display:grid !important; grid-template-columns:1fr 1fr !important; border-top:1px solid #ddd9d3 !important; }
+.proj-nav-item { padding:2rem 3rem !important; text-decoration:none !important; color:inherit !important; transition:background .3s !important; display:block !important; }
+.proj-nav-item:hover { background:#f0ece4 !important; }
+.proj-nav-item + .proj-nav-item { border-left:1px solid #ddd9d3 !important; }
+.proj-nav-dir { font-family:'DM Mono',monospace !important; font-size:.8rem !important; letter-spacing:.12em !important; text-transform:uppercase !important; color:#8a8480 !important; margin-bottom:.4rem !important; }
+.proj-nav-title { font-size:1.25rem !important; font-weight:400 !important; color:#1a1814 !important; }
+  
 @media(max-width:768px){
   #site-nav { padding: 1rem 1.5rem !important; }
   #site-nav ul { gap: 1.2rem; }
@@ -243,7 +243,7 @@ main { padding-top: 5.2rem; }
   </div>
 
   <!-- BOTTOM PROJECT NAV -->
-  <div class="project-nav">
+  <div class="project-nav" style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ddd9d3;">
     <a href="work.html" class="proj-nav-item">
       <div class="proj-nav-dir">← All Work</div>
       <div class="proj-nav-title">Back to Work</div>
