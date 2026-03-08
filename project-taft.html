@@ -7,6 +7,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
+
+/* ── INLINE NAV (cache-proof) ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 3rem;
+  background: rgba(247,244,239,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #ddd9d3;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+.nav-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem; font-weight: 600; letter-spacing: .02em;
+  color: #1a1814; text-decoration: none;
+}
+.nav-name span {
+  font-weight: 400; color: #2a5c8f; font-size: .78rem;
+  font-family: 'Inter', sans-serif; margin-left: .6rem; letter-spacing: .06em;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  font-family: 'Inter', sans-serif; font-size: .84rem; letter-spacing: .06em;
+  font-weight: 500; text-transform: uppercase; color: #4a4540;
+  text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover, .nav-links a.active { color: #1a1814; }
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: .78rem; }
+}
+
 main { padding-top: 5.2rem; }
 .project-hero { width:100%; aspect-ratio:21/9; background:var(--warm); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
 .project-hero img { width:100%; height:100%; object-fit:cover; }
@@ -75,7 +108,7 @@ main { padding-top: 5.2rem; }
     <li><a href="work.html" class="active">Work</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="resume.pdf" download style="color:var(--ink);font-weight:600;">Resume</a></li>
+    <li><a href="resume.pdf" download style="color:#1a1814;font-weight:600;">Resume</a></li>
   </ul>
 </nav>
 
