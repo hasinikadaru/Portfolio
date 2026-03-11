@@ -62,7 +62,7 @@ main { padding-top: 0; }
 .gallery-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:1px; }
 .gallery-grid-1 { display:grid; grid-template-columns:1fr; border:1px solid var(--rule); margin-bottom:1px; }
 .gallery-item { background:var(--paper); overflow:hidden; }
-.gallery-item img { height:500px; object-fit:contain; background:#f9f8f5; }
+.gallery-item img { width:100%; height:500px; display:block; object-fit:contain; background:#f9f8f5; padding:.5rem; }
 .gallery-caption { font-family:var(--mono); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); padding:.8rem 1rem; border-top:1px solid var(--rule); background:var(--paper); }
 
 .project-process { display:grid; grid-template-columns:1fr 2.5fr; gap:0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
@@ -219,12 +219,6 @@ main { padding-top: 0; }
     <div class="gallery-label">Redrawn Revit Documents</div>
     <p class="gallery-disclaimer">Redrawn in Revit from original 1960s construction documents at Northline Architects · Displayed for portfolio purposes</p>
 
-    <div class="gallery-grid-1">
-      <div class="gallery-item">
-        <img src="images/butler-overlap.png" alt="Existing + Proposed Overlay — First Floor">
-        <div class="gallery-caption">Existing + Proposed Overlay — First Floor Plan</div>
-      </div>
-    </div>
     <div class="gallery-grid-2">
       <div class="gallery-item">
         <img src="images/butler-first-floor.png" alt="First Floor Plan — redrawn CAD">
@@ -251,22 +245,16 @@ main { padding-top: 0; }
         <div class="gallery-caption">Southeast Elevation</div>
       </div>
     </div>
-    <div class="gallery-grid-1">
-      <div class="gallery-item">
-        <img src="images/butler-3d-render.png" alt="3D Massing Model — existing + proposed addition">
-        <div class="gallery-caption">3D Massing Model — Existing House + Proposed Addition</div>
-      </div>
-    </div>
   </div>
 
   <!-- PROCESS -->
   <div class="project-process">
     <aside class="project-sidebar"></aside>
     <div class="project-description">
-      <h2>Documentation Scope</h2>
-      <p>Drawing production involved digitally redrawing the complete existing house from five original hand-drafted sheets — first floor plan (garage, family room, kitchen, dining, living room, foyer), second floor plan (four bedrooms, two bathrooms, hall), basement plan (unexcavated garage side, utility area with heater and sump pit, beam and footing layout), and exterior elevations. All drawings were redrawn at current CAD standards while maintaining original dimensions and room configurations for as-built accuracy.</p>
-      <h3>Overlay and 3D Work</h3>
-      <p>An existing-proposed overlay drawing was prepared to communicate addition scope clearly to the project team — overlaying the redrawn existing first floor plan with the proposed addition footprint to illustrate the relationship between the two. A 3D massing model was also built in Revit to visualize how the proposed addition connects to the existing two-story main house and single-story garage wing, confirming massing proportions and roof geometry prior to design development.</p>
+     <h2>Documentation Scope</h2>
+      <p>Drawing production involved digitally redrawing the complete existing house from five original hand-drafted sheets in Revit — first floor plan (garage, family room, kitchen, dining, living room, foyer), second floor plan (four bedrooms, two bathrooms, hall), basement plan (unexcavated garage side, utility area with heater and sump pit, beam and footing layout), and exterior elevations. All drawings were redrawn at current standards while preserving original dimensions and room configurations for as-built accuracy.</p>
+      <h3>Existing + Proposed Overlay</h3>
+      <p>An overlay drawing was prepared to communicate addition scope to the project team — placing the redrawn existing first floor plan in relationship with the proposed addition footprint to illustrate how the two connect. The overlay was produced as a reference document; proposed addition drawings were outside the scope of this internship contribution.</p>
     </div>
   </div>
 
