@@ -45,16 +45,22 @@
 .featured-arrow { font-family:var(--sans); font-size:.82rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
 .featured-card:hover .featured-arrow::after { content:' →'; }
 
-#about-home { background:var(--ink); padding:0; }
-.about-home-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:35% 65%; gap:40px; align-items:center; padding:5rem 3rem; }
-.about-home-label { font-family:var(--sans); font-size:.9rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
-.about-home-heading { font-family:var(--serif); font-size:clamp(2rem,3.5vw,3rem); font-weight:300; color:var(--paper); line-height:1.2; margin-bottom:1.8rem; }
+#about-home { background:var(--ink); padding:6rem 3rem; }
+.about-home-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+
+.about-home-left { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.about-home-photo { width:200px; height:200px; border-radius:8px; overflow:hidden; margin-bottom:2rem; flex-shrink:0; }
+.about-home-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+
+.about-home-label { font-family:var(--sans); font-size:.9rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+.about-home-heading { font-family:var(--serif); font-size:clamp(1.6rem,2.5vw,2.2rem); font-weight:300; color:var(--paper); line-height:1.2; margin-bottom:1.2rem; }
 .about-home-heading em { font-style:italic; color:rgba(247,244,239,.4); }
-.about-home-body { font-family:var(--sans); font-size:1.05rem; font-weight:300; color:rgba(247,244,239,.6); line-height:1.85; margin-bottom:2.5rem; }
+.about-home-body { font-family:var(--sans); font-size:.95rem; font-weight:300; color:rgba(247,244,239,.6); line-height:1.85; margin-bottom:2rem; }
+
+.about-home-right { padding-top:1rem; }
 .skills-grid-home { display:grid; grid-template-columns:1fr 1fr; gap:2rem 2.5rem; }
 .skill-home-label { font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(247,244,239,.28); margin-bottom:.4rem; }
 .skill-home-val { font-family:var(--sans); font-size:.95rem; font-weight:400; color:rgba(247,244,239,.65); line-height:1.6; }
-
 /* Profile photo — 2x2 editorial, fills half section */
 .about-home-photo { width:35%; aspect-ratio:3/4; overflow:hidden; border-radius:6px; flex-shrink:0; align-self:center; }
 .about-home-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
