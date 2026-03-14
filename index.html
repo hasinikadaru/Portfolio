@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasini Kadaru — Architectural Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.hero { position:relative; height:100vh; min-height:640px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-bottom:1px solid var(--rule); }
+.hero-bg { position:absolute; inset:0; background:var(--paper); }
+.hero-overlay { display:none; }
+.hero-content { position:relative; z-index:2; text-align:center; padding:0 2rem; max-width:900px; width:100%; margin:0 auto; }
+.hero-eyebrow { font-family:var(--sans); font-size:1rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; }
+.hero-name { font-family:var(--serif); font-size:clamp(4rem,10vw,8rem); font-weight:300; line-height:1.0; color:var(--ink); letter-spacing:-.02em; margin-bottom:.6rem; }
+.hero-name em { font-style:italic; color:#3a3630; }
+.hero-tagline { font-family:var(--sans); font-size:1.15rem; font-weight:300; color:var(--mid); max-width:580px; margin:0 auto 1.5rem; line-height:1.8; }
+.hero-value { font-family:var(--sans); font-size:1.05rem; font-weight:300; color:var(--mid); max-width:600px; margin:0 auto 1.5rem; line-height:1.8; }
+.hero-location { font-family:var(--sans); font-size:.9rem; font-weight:400; color:var(--faint); letter-spacing:.1em; margin-bottom:2.8rem; }
+.hero-stats { display:flex; justify-content:center; gap:3.5rem; margin-bottom:3rem; flex-wrap:wrap; }
+.hero-stat-num { font-family:var(--sans); font-size:.9rem; font-weight:600; color:var(--ink); letter-spacing:.05em; display:block; }
+.hero-stat-label { font-family:var(--sans); font-size:.75rem; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); display:block; margin-top:.2rem; }
+.hero-cta { display:flex; gap:1.5rem; align-items:center; justify-content:center; }
+.hero-cta .btn-primary { background:var(--ink); color:var(--paper); }
+.hero-cta .btn-primary:hover { background:var(--accent); color:var(--paper); }
+
+#work { padding:6rem 3rem; background:var(--paper); }
+.featured-section-title { font-family:var(--sans); font-size:1.5rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); margin-bottom:.5rem; }
+.featured-section-sub { font-family:var(--sans); font-size:1rem; color:var(--mid); margin-bottom:3rem; }
+.featured-grid { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--rule); }
+.featured-card { background:var(--paper); text-decoration:none; color:inherit; display:block; overflow:hidden; transition:background .3s; border-right:1px solid var(--rule); }
+.featured-card:last-child { border-right:none; }
+.featured-card:hover { background:var(--warm); }
+.featured-thumb { width:100%; height:220px; overflow:hidden; background:var(--warm); position:relative; }
+.featured-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+.featured-card:hover .featured-thumb img { transform:scale(1.04); }
+.featured-info { padding:2rem 2.2rem 2.4rem; border-top:1px solid var(--rule); }
+.featured-meta { font-family:var(--sans); font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-bottom:.6rem; }
+.featured-title { font-family:var(--serif); font-size:1.6rem; font-weight:600; color:var(--ink); margin-bottom:.6rem; line-height:1.15; }
+.featured-desc { font-family:var(--sans); font-size:.95rem; color:var(--mid); line-height:1.75; margin-bottom:1.4rem; }
+.featured-arrow { font-family:var(--sans); font-size:.82rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+.featured-card:hover .featured-arrow::after { content:' →'; }
+
+#about-home { background:var(--ink); padding:6rem 3rem; }
+.about-home-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.about-home-left { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.about-home-photo { width:200px; height:200px; border-radius:8px; overflow:hidden; margin-bottom:2rem; flex-shrink:0; }
+.about-home-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+.about-home-label { font-family:var(--sans); font-size:.9rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+.about-home-heading { font-family:var(--serif); font-size:clamp(1.6rem,2.5vw,2.2rem); font-weight:300; color:var(--paper); line-height:1.2; margin-bottom:1.2rem; }
+.about-home-heading em { font-style:italic; color:rgba(247,244,239,.4); }
+.about-home-body { font-family:var(--sans); font-size:.95rem; font-weight:300; color:rgba(247,244,239,.6); line-height:1.85; margin-bottom:2rem; }
+.about-home-right { padding-top:1rem; }
+.skills-grid-home { display:grid; grid-template-columns:1fr 1fr; gap:2rem 2.5rem; }
+.skill-home-label { font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(247,244,239,.28); margin-bottom:.4rem; }
+.skill-home-val { font-family:var(--sans); font-size:.95rem; font-weight:400; color:rgba(247,244,239,.65); line-height:1.6; }
+
+#contact-home { padding:6rem 3rem; background:var(--paper); }
+.contact-home-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+.contact-home-label { font-family:var(--sans); font-size:.9rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
+.contact-home-heading { font-family:var(--serif); font-size:clamp(2rem,3.5vw,3rem); font-weight:300; color:var(--ink); line-height:1.2; margin-bottom:1.5rem; }
+.contact-home-heading em { font-style:italic; color:var(--faint); }
+.contact-home-body { font-family:var(--sans); font-size:1.05rem; color:var(--mid); line-height:1.8; margin-bottom:2rem; }
+.contact-detail-item { margin-bottom:1.5rem; }
+.contact-detail-label { font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
+.contact-detail-val { font-family:var(--sans); font-size:1.05rem; color:var(--ink); text-decoration:none; display:block; font-weight:400; }
+.contact-detail-val:hover { color:var(--accent); }
+.contact-form-home { display:flex; flex-direction:column; gap:0; }
+.form-group { border-bottom:1px solid var(--rule); padding:1.3rem 0; }
+.form-group:first-child { border-top:1px solid var(--rule); }
+.form-label-home { font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:.5rem; }
+.form-input,.form-textarea { width:100%; background:transparent; border:none; outline:none; font-family:var(--sans); font-size:1rem; color:var(--ink); padding:.3rem 0; resize:none; }
+.form-input::placeholder,.form-textarea::placeholder { color:var(--faint); }
+.form-textarea { min-height:120px; line-height:1.7; }
+.btn-submit-home { margin-top:1.8rem; font-family:var(--sans); font-size:.84rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--paper); background:var(--ink); border:none; padding:1rem 2.5rem; cursor:pointer; transition:background .2s; }
+.btn-submit-home:hover { background:var(--accent); }
+.success-msg { display:none; margin-top:1rem; padding:1rem; background:var(--warm); border:1px solid var(--rule); }
+.success-msg p { font-family:var(--sans); font-size:.9rem; color:#4a9a6a; font-weight:500; }
+
+@media (max-width:768px) {
+  #work { padding:4rem 1.5rem; }
+  .featured-grid { grid-template-columns:1fr !important; }
+  .featured-card { border-right:none !important; border-bottom:1px solid var(--rule); }
+  .featured-card:last-child { border-bottom:none; }
+  .about-home-inner { grid-template-columns:1fr; gap:3rem; }
+  .about-home-photo { width:100%; max-height:300px; aspect-ratio:unset; border-radius:6px; }
+  .contact-home-inner { grid-template-columns:1fr; gap:3rem; }
+  #about-home,#contact-home { padding:4rem 1.5rem; }
+  .hero-stats { gap:2rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="Hasini_Kadaru_Resume_2026" download="Hasini_Kadaru_Resume_2026.pdf" style="color:var(--ink);font-weight:600;">Resume</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Architectural Designer &nbsp;·&nbsp; CPHC</p>
+    <h1 class="hero-name">Hasini <em>Kadaru</em></h1>
+    <p class="hero-tagline">Revit documentation. Construction documents. Passive house detailing.</p>
+    <p class="hero-value">I bridge design intent and technical execution — from existing condition modeling to coordinated, permit-ready construction documents.</p>
+    <p class="hero-location">Rochester, NY &nbsp;·&nbsp; Graduating May 2026 &nbsp;·&nbsp; Open to Relocation</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-label">Construction Document Sets</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">M.Arch</span>
+        <span class="hero-stat-label">RIT Golisano Institute</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">CPHC</span>
+        <span class="hero-stat-label">Certified Passive House Consultant</span>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="work.html" class="btn-primary">View Work</a>
+      <a href="#contact-home" style="font-family:var(--sans);font-size:.84rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px;">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="featured-section-title">Featured Work</div>
+  <div class="featured-section-sub">Construction documentation. Renovation. Residential design.</div>
+  <div class="featured-grid">
+    <a href="project-taft.html" class="featured-card">
+      <div class="featured-thumb"><img src="images/taft-render-front.png" alt="Taft Aesthetics"></div>
+      <div class="featured-info">
+        <div class="featured-meta">Commercial Interior · Northline Architects · 2025</div>
+        <h3 class="featured-title">Taft Aesthetics</h3>
+        <p class="featured-desc">Complete construction document set for a two-story commercial interior in Wilson, NC — 8-sheet permit set spanning architectural, structural, and life safety drawings.</p>
+        <span class="featured-arrow">View Project</span>
+      </div>
+    </a>
+    <a href="project-kang.html" class="featured-card">
+      <div class="featured-thumb"><img src="images/kang-hero-render.png" alt="Kang Law Firm"></div>
+      <div class="featured-info">
+        <div class="featured-meta">Commercial Office Renovation · Northline Architects · 2025</div>
+        <h3 class="featured-title">Kang Law Firm</h3>
+        <p class="featured-desc">Two-story commercial office renovation — demolition plans, proposed floor plans, life safety analysis, reflected ceiling plan, and door schedules across a 9-sheet construction set in Canandaigua, NY.</p>
+        <span class="featured-arrow">View Project</span>
+      </div>
+    </a>
+    <a href="project-butler.html" class="featured-card">
+      <div class="featured-thumb"><img src="images/butler-overlap.png" alt="Butler Residence"></div>
+      <div class="featured-info">
+        <div class="featured-meta">Residential Renovation · Northline Architects · 2025</div>
+        <h3 class="featured-title">Butler Residence</h3>
+        <p class="featured-desc">Two-story residential renovation — existing conditions modeled in Revit from hand-drafted legacy construction documents, producing floor plans and elevations as the foundation for a proposed addition scope in Rochester, NY.</p>
+        <span class="featured-arrow">View Project</span>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <a href="work.html" class="btn-primary" style="background:var(--ink);color:var(--paper);">View All Projects</a>
+  </div>
+</section>
+
+<section id="about-home">
+  <div class="about-home-inner">
+    <div class="about-home-left">
+      <div class="about-home-photo">
+        <img src="images/hasini-profile.jpg" alt="Hasini Kadaru">
+      </div>
+      <div class="about-home-label">About</div>
+      <h2 class="about-home-heading">Documentation-focused designer with a <em>performance-first</em> foundation.</h2>
+      <p class="about-home-body">Architectural designer with hands-on experience in Revit-based construction documentation for residential renovations, additions, and commercial interiors. Certified Passive House Consultant (CPHC) with technical knowledge of envelope performance, airtight detailing, and energy-conscious documentation. Graduating May 2026 from RIT's Golisano Institute for Sustainability.</p>
+      <div style="display:flex;flex-direction:row;gap:2rem;flex-wrap:wrap;align-items:center;justify-content:center;">
+        <a href="about.html" class="btn-primary">Full Bio</a>
+        <a href="Hasini_Kadaru_Resume_2026" download="Hasini_Kadaru_Resume_2026.pdf" style="font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,239,.55);text-decoration:none;border-bottom:1px solid rgba(247,244,239,.2);padding-bottom:2px;">Download Resume</a>
+      </div>
+    </div>
+    <div class="about-home-right">
+      <div class="skills-grid-home">
+        <div><div class="skill-home-label">BIM &amp; Docs</div><div class="skill-home-val">Revit · AutoCAD · Bluebeam</div></div>
+        <div><div class="skill-home-label">Visualization</div><div class="skill-home-val">SketchUp · Enscape · Lumion</div></div>
+        <div><div class="skill-home-label">Performance</div><div class="skill-home-val">Cove.Tool · Climate Consultant · THERM</div></div>
+        <div><div class="skill-home-label">Certification</div><div class="skill-home-val">CPHC · Passive House Institute</div></div>
+        <div><div class="skill-home-label">Education</div><div class="skill-home-val">M.Arch, RIT · B.Arch, Sri Venkateshwara</div></div>
+        <div><div class="skill-home-label">Location</div><div class="skill-home-val">Rochester, NY · Open to Relocation</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact-home">
+  <div class="contact-home-inner">
+    <div>
+      <div class="contact-home-label">Contact</div>
+      <h2 class="contact-home-heading">Let's work <em>together.</em></h2>
+      <p class="contact-home-body">I'm actively looking for full-time positions in architectural design and construction documentation — particularly at firms working in renovation, residential, or high-performance sustainable building types. Available from May 2026.</p>
+      <div class="contact-detail-item">
+        <div class="contact-detail-label">Email</div>
+        <a href="mailto:hasinikadaru2369@gmail.com" class="contact-detail-val">hasinikadaru2369@gmail.com</a>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-detail-label">LinkedIn</div>
+        <a href="https://linkedin.com/in/hasinikadaru" target="_blank" class="contact-detail-val">linkedin.com/in/hasinikadaru</a>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form-home" action="https://formspree.io/f/maqpyppz" method="POST">
+        <div class="form-group">
+          <label class="form-label-home" for="hp-name">Your Name</label>
+          <input class="form-input" type="text" id="hp-name" name="name" placeholder="First and last name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label-home" for="hp-email">Email</label>
+          <input class="form-input" type="email" id="hp-email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label-home" for="hp-msg">Message</label>
+          <textarea class="form-textarea" id="hp-msg" name="message" placeholder="Your message" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit-home">Send Message</button>
+      </form>
+      <div class="success-msg" id="successMsg"><p>✓ Message sent — I'll be in touch soon.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Hasini Kadaru</p>
+  <p>www.hasinikadaru.com</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+const form = document.querySelector('.contact-form-home');
+const successMsg = document.getElementById('successMsg');
+if(form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-submit-home');
+    btn.textContent = 'Sending...'; btn.disabled = true;
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if(res.ok) { form.reset(); successMsg.style.display='block'; btn.textContent='Sent!'; }
+      else { btn.textContent='Send Message'; btn.disabled=false; }
+    } catch(err) { btn.textContent='Send Message'; btn.disabled=false; }
+  });
+}
+</script>
+</body>
+</html>
