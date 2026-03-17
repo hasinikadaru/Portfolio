@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Job Tracker — Hasini Kadaru</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#F7F5F0;--surface:#FFFFFF;--surface2:#F0EDE6;--surface3:#E8E4DC;--text:#1A1916;--text2:#6B6860;--text3:#A09D96;--border:rgba(26,25,22,0.1);--border2:rgba(26,25,22,0.18);--accent:#2D5A3D;--accent-bg:#EAF2EC;--amber:#B87333;--amber-bg:#FBF3E8;--red:#A32D2D;--red-bg:#FCEBEB;--blue:#1A4A7A;--blue-bg:#EAF1FB;--purple:#4A3880;--purple-bg:#EEEDFB;--r:10px;--rl:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.shell{max-width:900px;margin:0 auto;padding:2rem 1.25rem 5rem;}
+.masthead{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:12px;}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-.3px;}
+.sync-row{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text3);}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.dot.ok{background:var(--accent);}
+.dot.err{background:var(--red);}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.75rem;}
+.tab{padding:10px 20px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-1px;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
+.tb{display:inline-block;background:var(--surface2);color:var(--text3);font-size:10px;padding:1px 6px;border-radius:20px;margin-left:5px;}
+.tb.amber{background:var(--amber-bg);color:var(--amber);}
+.panel{display:none;}
+.panel.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.75rem;}
+.stat{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.sl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;}
+.sn{font-size:24px;font-weight:300;}
+.sn.amber{color:var(--amber);}
+.sn.accent{color:var(--accent);}
+.add-box{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 18px;margin-bottom:1.5rem;}
+.ab-label{font-size:12px;color:var(--text3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em;}
+.add-row{display:flex;gap:8px;flex-wrap:wrap;}
+.add-row input{flex:1;min-width:180px;padding:9px 13px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;}
+.add-row input:focus{outline:none;border-color:var(--accent);}
+.lr{display:none;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text2);}
+.lr.show{display:flex;}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:p 1.2s infinite;}
+@keyframes p{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.fb{padding:5px 13px;border-radius:20px;border:0.5px solid var(--border);background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text2);cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:var(--border2);color:var(--text);}
+.fb.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+.btn{padding:9px 16px;border-radius:var(--r);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all .15s;border:0.5px solid var(--border2);background:var(--surface);color:var(--text);white-space:nowrap;}
+.btn:hover{background:var(--surface2);}
+.btn-a{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-a:hover{opacity:.88;}
+.btn-sm{padding:5px 11px;font-size:12px;}
+.btn-g{background:transparent;border-color:transparent;color:var(--text3);}
+.btn-g:hover{color:var(--text);background:var(--surface2);border-color:var(--border);}
+.card-list{display:flex;flex-direction:column;gap:10px;}
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .2s;}
+.card.due{border-left:3px solid var(--amber);}
+.card.warm-c{border-left:3px solid var(--accent);}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 17px 0;gap:10px;cursor:pointer;user-select:none;}
+.chl{flex:1;min-width:0;}
+.ct{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.cm{font-size:13px;color:var(--text2);display:flex;gap:8px;flex-wrap:wrap;}
+.chr{display:flex;align-items:center;gap:7px;flex-shrink:0;padding-bottom:15px;}
+.chev{font-size:10px;color:var(--text3);transition:transform .2s;}
+.chev.open{transform:rotate(180deg);}
+.cb{display:none;padding:0 17px 17px;}
+.cb.open{display:block;}
+.div{border:none;border-top:0.5px solid var(--border);margin:13px 0;}
+.sec{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:9px;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px;}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px;}
+.f{display:flex;flex-direction:column;gap:4px;}
+.f label{font-size:11px;color:var(--text3);}
+.f input,.f select,.f textarea{padding:7px 11px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;transition:border-color .15s;}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--accent);}
+.f textarea{resize:vertical;min-height:64px;line-height:1.55;}
+.full{grid-column:1/-1;}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px;}
+.tag{padding:4px 12px;border-radius:20px;font-size:12px;font-family:'DM Sans',sans-serif;border:0.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;}
+.tag:hover{border-color:var(--text3);color:var(--text);}
+.tag.on{background:var(--text);color:var(--bg);border-color:var(--text);}
+.ti{padding:4px 11px;border-radius:20px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);border:0.5px solid var(--border);width:100px;}
+.ti:focus{outline:none;border-color:var(--accent);}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;}
+.bs{background:var(--surface2);color:var(--text2);}
+.ba{background:var(--blue-bg);color:var(--blue);}
+.bf{background:var(--amber-bg);color:var(--amber);}
+.bi{background:var(--purple-bg);color:var(--purple);}
+.bo{background:var(--accent-bg);color:var(--accent);}
+.br{background:var(--red-bg);color:var(--red);}
+.bw{background:var(--accent-bg);color:var(--accent);}
+.bc{background:var(--surface2);color:var(--text2);}
+.bref{background:var(--purple-bg);color:var(--purple);}
+.bm{background:var(--blue-bg);color:var(--blue);}
+.fu-box{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-radius:var(--r);font-size:13px;margin-bottom:10px;background:var(--surface2);gap:8px;flex-wrap:wrap;}
+.fu-box.urg{background:var(--amber-bg);}
+.fu-lbl{color:var(--text2);}
+.fu-box.urg .fu-lbl{color:var(--amber);}
+.fu-dt{font-weight:500;}
+.fu-box.urg .fu-dt{color:var(--amber);}
+.due-flag{font-size:11px;font-weight:500;color:var(--amber);background:var(--amber-bg);padding:3px 9px;border-radius:20px;}
+.log-entry{background:var(--bg);border-radius:var(--r);padding:10px 13px;margin-bottom:7px;border:0.5px solid var(--border);}
+.log-d{font-size:11px;color:var(--text3);margin-bottom:3px;}
+.log-m{font-size:13px;color:var(--text);line-height:1.55;}
+.log-r{font-size:12px;color:var(--accent);margin-top:4px;font-style:italic;}
+.log-row{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap;}
+.log-row input,.log-row textarea{flex:1;min-width:140px;padding:7px 11px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;}
+.log-row input:focus,.log-row textarea:focus{outline:none;border-color:var(--accent);}
+.cal-hdr{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.cal-mon{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;}
+.cal-nav{padding:5px 12px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.cal-nav:hover{background:var(--surface2);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:1.5rem;}
+.cal-dn{text-align:center;font-size:11px;color:var(--text3);padding:6px 0;text-transform:uppercase;letter-spacing:.04em;}
+.cell{min-height:72px;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:6px;cursor:default;}
+.cell.om{background:var(--bg);opacity:.5;}
+.cell.today{border-color:var(--accent);}
+.cell-num{font-size:12px;color:var(--text2);margin-bottom:3px;}
+.cell.today .cell-num{color:var(--accent);font-weight:500;}
+.ev{font-size:10px;padding:2px 5px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;}
+.ev-g{background:var(--blue-bg);color:var(--blue);}
+.ev-t{background:var(--purple-bg);color:var(--purple);}
+.ev-f{background:var(--amber-bg);color:var(--amber);}
+.upcoming{display:flex;flex-direction:column;gap:8px;}
+.up-item{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.up-dt{min-width:46px;text-align:center;background:var(--surface2);border-radius:var(--r);padding:6px 4px;}
+.up-mo{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;}
+.up-dy{font-size:20px;font-weight:300;line-height:1;}
+.up-info{flex:1;}
+.up-ttl{font-size:14px;font-weight:500;margin-bottom:2px;}
+.up-meta{font-size:12px;color:var(--text2);}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--surface);border-radius:var(--rl);padding:24px;width:100%;max-width:440px;margin:1rem;}
+.modal h2{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;margin-bottom:16px;}
+.mod-act{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;}
+.card-act{display:flex;gap:7px;justify-content:flex-end;align-items:center;padding-top:5px;}
+.empty{text-align:center;padding:3.5rem 1rem;color:var(--text3);}
+.empty p{font-size:15px;color:var(--text2);margin-bottom:5px;}
+.empty small{font-size:13px;}
+.notice{background:var(--amber-bg);border:0.5px solid rgba(184,115,51,.25);border-radius:var(--rl);padding:14px 18px;margin-bottom:1.5rem;font-size:13px;color:#7A4A00;line-height:1.6;}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}.fg,.fg3{grid-template-columns:1fr;}.masthead{flex-direction:column;align-items:flex-start;}.cell{min-height:52px;}.cal-grid{gap:1px;}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="masthead">
+    <h1>Job Tracker</h1>
+    <div class="sync-row"><div class="dot" id="sync-dot"></div><span id="sync-lbl">Not connected</span></div>
+  </div>
+
+  <div class="notice" id="setup-notice" style="display:none">
+    <strong>Setup needed:</strong> Replace <code>YOUR_SCRIPT_URL_HERE</code> near the top of this file with your Google Apps Script URL. See <strong>setup-guide.md</strong> for step-by-step instructions.
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('jobs',this)">Jobs <span class="tb" id="tb-jobs">0</span></button>
+    <button class="tab" onclick="showTab('network',this)">Network <span class="tb" id="tb-net">0</span></button>
+    <button class="tab" onclick="showTab('calendar',this)">Calendar <span class="tb amber" id="tb-cal"></span></button>
+  </div>
+
+  <!-- JOBS -->
+  <div class="panel active" id="panel-jobs">
+    <div class="stats">
+      <div class="stat"><div class="sl">Total</div><div class="sn" id="js-tot">0</div></div>
+      <div class="stat"><div class="sl">Applied</div><div class="sn" id="js-app">0</div></div>
+      <div class="stat"><div class="sl">Follow-ups due</div><div class="sn amber" id="js-due">0</div></div>
+      <div class="stat"><div class="sl">Interviews</div><div class="sn accent" id="js-int">0</div></div>
+    </div>
+    <div class="add-box">
+      <div class="ab-label">Add a job</div>
+      <div class="add-row">
+        <input type="text" id="job-url" placeholder="Paste job URL — LinkedIn, Jobright, company site…"/>
+        <button class="btn btn-a" onclick="extractJob()">Extract with AI ↗</button>
+        <button class="btn" onclick="addBlankJob()">+ Blank</button>
+      </div>
+      <div class="lr" id="job-lr"><div class="pulse"></div><span>Extracting with AI…</span></div>
+    </div>
+    <div class="filters" id="jf">
+      <button class="fb active" onclick="setJF('all',this)">All</button>
+      <button class="fb" onclick="setJF('saved',this)">Saved</button>
+      <button class="fb" onclick="setJF('applied',this)">Applied</button>
+      <button class="fb" onclick="setJF('followed',this)">Followed up</button>
+      <button class="fb" onclick="setJF('interview',this)">Interview</button>
+      <button class="fb" onclick="setJF('offer',this)">Offer</button>
+      <button class="fb" onclick="setJF('rejected',this)">Rejected</button>
+    </div>
+    <div class="card-list" id="jobs-list"></div>
+  </div>
+
+  <!-- NETWORK -->
+  <div class="panel" id="panel-network">
+    <div class="stats">
+      <div class="stat"><div class="sl">Contacts</div><div class="sn" id="ns-tot">0</div></div>
+      <div class="stat"><div class="sl">Warm</div><div class="sn accent" id="ns-warm">0</div></div>
+      <div class="stat"><div class="sl">Follow-ups due</div><div class="sn amber" id="ns-due">0</div></div>
+      <div class="stat"><div class="sl">Meetings</div><div class="sn" id="ns-meet">0</div></div>
+    </div>
+    <div class="add-box">
+      <div class="ab-label">Add a contact</div>
+      <div class="add-row">
+        <input type="text" id="cn-name" placeholder="Contact name"/>
+        <input type="text" id="cn-firm" placeholder="Firm / company (optional)"/>
+        <button class="btn btn-a" onclick="addContact()">+ Add</button>
+      </div>
+    </div>
+    <div class="filters" id="cf">
+      <button class="fb active" onclick="setCF('all',this)">All</button>
+      <button class="fb" onclick="setCF('warm',this)">Warm</button>
+      <button class="fb" onclick="setCF('cold',this)">Cold outreach</button>
+      <button class="fb" onclick="setCF('referred',this)">Referred</button>
+      <button class="fb" onclick="setCF('met',this)">Met in person</button>
+    </div>
+    <div class="card-list" id="contacts-list"></div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="panel" id="panel-calendar">
+    <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <button class="btn btn-a" onclick="openMtgModal()">+ Schedule meeting</button>
+      <button class="btn" onclick="syncGcal()">↻ Sync Google Calendar</button>
+    </div>
+    <div class="cal-hdr">
+      <button class="cal-nav" onclick="changeMonth(-1)">← Prev</button>
+      <div class="cal-mon" id="cal-mon-lbl"></div>
+      <button class="cal-nav" onclick="changeMonth(1)">Next →</button>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="sec" style="margin-bottom:12px">Upcoming</div>
+    <div class="upcoming" id="upcoming-list"></div>
+  </div>
+</div>
+
+<!-- Meeting modal -->
+<div class="modal-bg" id="mtg-modal">
+  <div class="modal">
+    <h2>Schedule a meeting</h2>
+    <div class="fg" style="margin-bottom:9px">
+      <div class="f full"><label>Title / purpose</label><input id="m-title" placeholder="e.g. Informational call with Sarah Chen"/></div>
+      <div class="f"><label>Date</label><input type="date" id="m-date"/></div>
+      <div class="f"><label>Time</label><input type="time" id="m-time"/></div>
+      <div class="f"><label>Contact (optional)</label><input id="m-contact" list="dl-contacts" placeholder="Name"/><datalist id="dl-contacts"></datalist></div>
+      <div class="f"><label>Related job (optional)</label><input id="m-job" list="dl-jobs" placeholder="Company or role"/><datalist id="dl-jobs"></datalist></div>
+      <div class="f full"><label>Notes / agenda</label><textarea id="m-notes" placeholder="What do you want to discuss?"></textarea></div>
+    </div>
+    <div class="mod-act">
+      <button class="btn" onclick="closeMtgModal()">Cancel</button>
+      <button class="btn btn-a" onclick="saveMtg()">Save meeting</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnP7oPL0YxSE6VMJEq8_V0BvBu1MYbxSqgj9E7IOMWynFesqv0E7jbY1Ig5wmsC_uq/exec';
+// ────────────────────────────────────────
+
+const CFG = SCRIPT_URL !== 'YOUR_SCRIPT_URL_HERE';
+if(!CFG) document.getElementById('setup-notice').style.display='block';
+
+let jobs=[], contacts=[], meetings=[], gcalEvents=[];
+let jf='all', cf='all';
+const now=new Date(); let calY=now.getFullYear(), calM=now.getMonth();
+
+function setSS(s){
+  const d=document.getElementById('sync-dot'),l=document.getElementById('sync-lbl');
+  if(s==='ok'){d.className='dot ok';l.textContent='Synced';l.style.color='var(--accent)';}
+  else if(s==='err'){d.className='dot err';l.textContent='Sync error';l.style.color='var(--red)';}
+  else if(s==='saving'){d.className='dot';l.textContent='Saving…';l.style.color='var(--text3)';}
+  else{d.className='dot';l.textContent=CFG?'Loading…':'Not connected';l.style.color='var(--text3)';}
+}
+
+async function api(action,payload={}){
+  if(!CFG){lfl();return null;}
+  try{const r=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({action,...payload})});return r.json();}
+  catch(e){setSS('err');return null;}
+}
+function lfl(){
+  jobs=JSON.parse(localStorage.getItem('hk-j')||'[]');
+  contacts=JSON.parse(localStorage.getItem('hk-c')||'[]');
+  meetings=JSON.parse(localStorage.getItem('hk-m')||'[]');
+}
+function ls(){
+  localStorage.setItem('hk-j',JSON.stringify(jobs));
+  localStorage.setItem('hk-c',JSON.stringify(contacts));
+  localStorage.setItem('hk-m',JSON.stringify(meetings));
+}
+async function loadAll(){
+  setSS('loading');
+  if(!CFG){lfl();ra();return;}
+  const d=await api('getAll');
+  if(d){jobs=d.jobs||[];contacts=d.contacts||[];meetings=d.meetings||[];setSS('ok');}
+  else{setSS('err');lfl();}
+  ra();
+}
+let st=null;
+function ds(){clearTimeout(st);st=setTimeout(async()=>{ls();if(!CFG)return;setSS('saving');const d=await api('saveAll',{jobs,contacts,meetings});if(d&&d.success)setSS('ok');else setSS('err');},900);}
+
+function addWD(from,days){let d=new Date(from),a=0;while(a<days){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)a++;}return d.toISOString().split('T')[0];}
+function fmt(s){if(!s)return'';return new Date(s+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function isDJ(j){if(!j.followupDate)return false;if(['followed','interview','offer','rejected'].includes(j.status))return false;return new Date(j.followupDate+'T23:59:59')<=new Date();}
+function isDC(c){if(!c.followupDate)return false;return new Date(c.followupDate+'T23:59:59')<=new Date();}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+function showTab(n,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  el.classList.add('active');
+  if(n==='calendar')renderCal();
+}
+
+// ═══ JOBS ═══
+const JS={saved:'Saved',applied:'Applied',followed:'Followed up',interview:'Interview',offer:'Offer',rejected:'Rejected'};
+const JN={saved:'applied',applied:'followed',followed:'interview',interview:'offer',offer:'offer',rejected:'rejected'};
+const RV=['General'];
+const CLV=['Standard','Sustainability-tailored','Sent','Not sent'];
+const PV=['Full portfolio','Passive house focus','Adaptive reuse focus','Customized'];
+
+function mj(o={}){return{id:uid(),url:'',title:'',company:'',location:'',salary:'',type:'Full-time',description:'',source:'',status:'saved',appliedDate:'',followupDate:'',resume:'',cl:'',portfolio:'',contactName:'',contactRole:'',message:'',notes:'',expanded:true,...o};}
+
+async function extractJob(){
+  const url=document.getElementById('job-url').value.trim();if(!url)return;
+  document.getElementById('job-lr').classList.add('show');
+  let info={};
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:1000,
+      tools:[{type:'web_search_20250305',name:'web_search'}],
+      system:`Extract job listing data. Return ONLY valid JSON no markdown:
+{"title":"","company":"","location":"","salary":"","type":"","description":"","source":""}
+type: Full-time|Part-time|Contract|Internship. description: 2-3 sentence summary.`,
+      messages:[{role:'user',content:`Extract job from: ${url}`}]
+    })});
+    const d=await r.json();
+    let t=(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    t=t.replace(/```json|```/g,'').trim();
+    try{info=JSON.parse(t);}catch(e){}
+  }catch(e){}
+  document.getElementById('job-lr').classList.remove('show');
+  document.getElementById('job-url').value='';
+  const job=mj({url,...info});jobs.unshift(job);ds();renderJobs();
+}
+
+function addBlankJob(){const j=mj();jobs.unshift(j);ds();renderJobs();}
+
+function uj(id,field,val){
+  const j=jobs.find(x=>x.id===id);if(!j)return;
+  j[field]=val;
+  if(field==='appliedDate'&&val)j.followupDate=addWD(val,3);
+  if(field==='status'&&val==='applied'&&!j.appliedDate){j.appliedDate=new Date().toISOString().split('T')[0];j.followupDate=addWD(new Date(),3);}
+  ds();upJS();
+}
+function tjt(id,field,val,el){const j=jobs.find(x=>x.id===id);if(!j)return;j[field]=j[field]===val?'':val;el.classList.toggle('on',j[field]===val);ds();}
+function ajs(id){const j=jobs.find(x=>x.id===id);if(!j)return;j.status=JN[j.status]||j.status;if(j.status==='applied'&&!j.appliedDate){j.appliedDate=new Date().toISOString().split('T')[0];j.followupDate=addWD(new Date(),3);}ds();renderJobs();}
+function delJ(id){jobs=jobs.filter(x=>x.id!==id);ds();renderJobs();}
+function togJ(id){const j=jobs.find(x=>x.id===id);if(!j)return;j.expanded=!j.expanded;const b=document.querySelector(`[data-jid="${id}"] .cb`),c=document.querySelector(`[data-jid="${id}"] .chev`);if(b)b.classList.toggle('open',j.expanded);if(c)c.classList.toggle('open',j.expanded);}
+function setJF(f,el){jf=f;document.querySelectorAll('#jf .fb').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderJobs();}
+
+function upJS(){
+  document.getElementById('js-tot').textContent=jobs.length;
+  document.getElementById('js-app').textContent=jobs.filter(j=>['applied','followed','interview','offer'].includes(j.status)).length;
+  document.getElementById('js-due').textContent=jobs.filter(j=>isDJ(j)).length;
+  document.getElementById('js-int').textContent=jobs.filter(j=>j.status==='interview').length;
+  document.getElementById('tb-jobs').textContent=jobs.length;
+}
+
+function trHTML(id,field,vers,cur,isJ){
+  return vers.map(v=>`<button class="tag ${cur===v?'on':''}" onclick="${isJ?'tjt':'tct'}('${id}','${field}','${v}',this)">${v}</button>`).join('')+
+    (field==='resume'?`<input class="ti" placeholder="Custom…" value="${!vers.includes(cur)&&cur?esc(cur):''}" oninput="${isJ?'uj':'uc'}('${id}','${field}',this.value)"/>`:'');
+}
+
+function jHTML(j){
+  const due=isDJ(j);
+  return`<div class="card ${due?'due':''}" data-jid="${j.id}">
+<div class="ch" onclick="togJ('${j.id}')">
+  <div class="chl"><div class="ct">${esc(j.title)||'Untitled position'}</div>
+  <div class="cm"><span>${esc(j.company)||'—'}</span>${j.location?`<span>· ${esc(j.location)}</span>`:''}${j.salary?`<span>· ${esc(j.salary)}</span>`:''}${j.source?`<span style="color:var(--text3)">· ${esc(j.source)}</span>`:''}</div></div>
+  <div class="chr">${due?`<span class="due-flag">Follow up</span>`:''}
+    <span class="badge b${j.status[0]}" onclick="event.stopPropagation();ajs('${j.id}')" title="Click to advance">${JS[j.status]}</span>
+    <span class="chev ${j.expanded?'open':''}">▼</span></div>
+</div>
+<div class="cb ${j.expanded?'open':''}">
+  ${j.description?`<hr class="div"/><div class="sec">Role summary</div><div style="font-size:13px;color:var(--text2);line-height:1.65;background:var(--bg);border-radius:var(--r);padding:11px 13px;max-height:86px;overflow-y:auto">${esc(j.description)}</div>`:''}
+  <hr class="div"/><div class="sec">Details</div>
+  <div class="fg">
+    <div class="f"><label>Job title</label><input value="${esc(j.title)}" oninput="uj('${j.id}','title',this.value)" placeholder="Architectural Designer"/></div>
+    <div class="f"><label>Company</label><input value="${esc(j.company)}" oninput="uj('${j.id}','company',this.value)"/></div>
+    <div class="f"><label>Location</label><input value="${esc(j.location)}" oninput="uj('${j.id}','location',this.value)" placeholder="City, ST or Remote"/></div>
+    <div class="f"><label>Salary</label><input value="${esc(j.salary)}" oninput="uj('${j.id}','salary',this.value)" placeholder="$60k–$75k"/></div>
+    <div class="f"><label>Applied date</label><input type="date" value="${j.appliedDate||''}" onchange="uj('${j.id}','appliedDate',this.value)"/></div>
+    <div class="f"><label>Job URL</label><input value="${esc(j.url)}" oninput="uj('${j.id}','url',this.value)" placeholder="https://…"/></div>
+  </div>
+  ${j.followupDate?`<div class="fu-box ${due?'urg':''}"><span class="fu-lbl">Follow-up by</span><span class="fu-dt">${fmt(j.followupDate)}</span>${due?`<button class="btn btn-sm" onclick="uj('${j.id}','status','followed');renderJobs()">Mark followed up</button>`:''}</div>`:''}
+  <hr class="div"/><div class="sec">Application materials</div>
+  <div style="margin-bottom:7px"><div style="font-size:11px;color:var(--text3);margin-bottom:5px">Resume</div><div class="tags">${trHTML(j.id,'resume',RV,j.resume,true)}</div></div>
+  <div style="margin-bottom:7px"><div style="font-size:11px;color:var(--text3);margin-bottom:5px">Cover letter</div><div class="tags">${trHTML(j.id,'cl',CLV,j.cl,true)}</div></div>
+  <div style="margin-bottom:4px"><div style="font-size:11px;color:var(--text3);margin-bottom:5px">Portfolio</div><div class="tags">${trHTML(j.id,'portfolio',PV,j.portfolio,true)}</div></div>
+  <hr class="div"/><div class="sec">Contact &amp; outreach</div>
+  <div class="fg">
+    <div class="f"><label>Contact name</label><input value="${esc(j.contactName)}" oninput="uj('${j.id}','contactName',this.value)" placeholder="Name at firm"/></div>
+    <div class="f"><label>Role / platform</label><input value="${esc(j.contactRole)}" oninput="uj('${j.id}','contactRole',this.value)" placeholder="Principal, LinkedIn…"/></div>
+  </div>
+  <div class="f" style="margin-bottom:9px"><label>Message sent</label><textarea oninput="uj('${j.id}','message',this.value)" placeholder="Paste the message you sent…">${esc(j.message)}</textarea></div>
+  <hr class="div"/>
+  <div class="f" style="margin-bottom:13px"><label>Notes</label><textarea oninput="uj('${j.id}','notes',this.value)" placeholder="Interview notes, impressions, referrals…">${esc(j.notes)}</textarea></div>
+  <div class="card-act">
+    <div class="f" style="flex-direction:row;align-items:center;gap:6px;margin-right:auto">
+      <label style="font-size:11px">Status</label>
+      <select onchange="uj('${j.id}','status',this.value);renderJobs()" style="padding:5px 10px;font-size:12px;border-radius:20px;cursor:pointer">
+        ${Object.entries(JS).map(([k,v])=>`<option value="${k}" ${j.status===k?'selected':''}>${v}</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn btn-sm" onclick="delJ('${j.id}')" style="color:var(--red)">Delete</button>
+  </div>
+</div></div>`;
+}
+
+function renderJobs(){
+  upJS();
+  const list=document.getElementById('jobs-list');
+  const f=jf==='all'?jobs:jobs.filter(j=>j.status===jf);
+  if(!f.length){list.innerHTML=`<div class="empty"><p>No jobs yet.</p><small>Paste a URL above to get started.</small></div>`;return;}
+  list.innerHTML=f.map(j=>jHTML(j)).join('');
+}
+
+// ═══ CONTACTS ═══
+const CS={warm:'Warm',cold:'Cold outreach',referred:'Referred',met:'Met in person'};
+const RT=['RIT alumni','AIA chapter','LinkedIn cold outreach','Firm principal','Hiring manager','Professor / advisor','Architect I met','Other'];
+
+function mc(o={}){return{id:uid(),name:'',firm:'',role:'',email:'',linkedin:'',status:'cold',relType:'',followupDate:'',notes:'',log:[],expanded:true,...o};}
+
+function addContact(){
+  const n=document.getElementById('cn-name').value.trim();if(!n)return;
+  const f=document.getElementById('cn-firm').value.trim();
+  const c=mc({name:n,firm:f});contacts.unshift(c);
+  document.getElementById('cn-name').value='';document.getElementById('cn-firm').value='';
+  ds();renderContacts();
+}
+
+function uc(id,field,val){const c=contacts.find(x=>x.id===id);if(!c)return;c[field]=val;ds();upCS();}
+function tct(id,field,val,el){const c=contacts.find(x=>x.id===id);if(!c)return;c[field]=c[field]===val?'':val;el.classList.toggle('on',c[field]===val);ds();}
+
+function addLog(id){
+  const c=contacts.find(x=>x.id===id);if(!c)return;
+  const md=document.getElementById(`ld-${id}`),mm=document.getElementById(`lm-${id}`),mr=document.getElementById(`lr-${id}`);
+  if(!mm||!mm.value.trim())return;
+  if(!c.log)c.log=[];
+  c.log.unshift({date:md?md.value:new Date().toISOString().split('T')[0],msg:mm.value.trim(),reply:mr?mr.value.trim():''});
+  mm.value='';if(mr)mr.value='';
+  c.followupDate=addWD(new Date(),3);
+  ds();renderContacts();
+}
+
+function delC(id){contacts=contacts.filter(x=>x.id!==id);ds();renderContacts();}
+function togC(id){const c=contacts.find(x=>x.id===id);if(!c)return;c.expanded=!c.expanded;const b=document.querySelector(`[data-cid="${id}"] .cb`),ch=document.querySelector(`[data-cid="${id}"] .chev`);if(b)b.classList.toggle('open',c.expanded);if(ch)ch.classList.toggle('open',c.expanded);}
+function setCF(f,el){cf=f;document.querySelectorAll('#cf .fb').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderContacts();}
+
+function upCS(){
+  document.getElementById('ns-tot').textContent=contacts.length;
+  document.getElementById('ns-warm').textContent=contacts.filter(c=>['warm','referred','met'].includes(c.status)).length;
+  document.getElementById('ns-due').textContent=contacts.filter(c=>isDC(c)).length;
+  document.getElementById('ns-meet').textContent=meetings.length;
+  document.getElementById('tb-net').textContent=contacts.length;
+}
+
+function cHTML(c){
+  const due=isDC(c);
+  const ini=(c.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const logH=(c.log||[]).slice(0,5).map(e=>`<div class="log-entry"><div class="log-d">${fmt(e.date)}</div><div class="log-m">${esc(e.msg)}</div>${e.reply?`<div class="log-r">Reply: ${esc(e.reply)}</div>`:''}</div>`).join('');
+  const bCls={warm:'bw',cold:'bc',referred:'bref',met:'bm'};
+  return`<div class="card ${due?'due':''} ${['warm','referred','met'].includes(c.status)?'warm-c':''}" data-cid="${c.id}">
+<div class="ch" onclick="togC('${c.id}')">
+  <div class="chl" style="display:flex;align-items:center;gap:10px">
+    <div style="width:38px;height:38px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0">${ini}</div>
+    <div><div class="ct">${esc(c.name)}</div>
+    <div class="cm">${c.firm?`<span>${esc(c.firm)}</span>`:''}${c.role?`<span>· ${esc(c.role)}</span>`:''}${c.relType?`<span style="color:var(--text3)">· ${esc(c.relType)}</span>`:''}</div></div>
+  </div>
+  <div class="chr">${due?`<span class="due-flag">Follow up</span>`:''}
+    <span class="badge ${bCls[c.status]||'bc'}">${CS[c.status]||c.status}</span>
+    <span class="chev ${c.expanded?'open':''}">▼</span></div>
+</div>
+<div class="cb ${c.expanded?'open':''}">
+  <hr class="div"/><div class="sec">Contact info</div>
+  <div class="fg">
+    <div class="f"><label>Full name</label><input value="${esc(c.name)}" oninput="uc('${c.id}','name',this.value)"/></div>
+    <div class="f"><label>Firm / company</label><input value="${esc(c.firm)}" oninput="uc('${c.id}','firm',this.value)" placeholder="Where they work"/></div>
+    <div class="f"><label>Their title / role</label><input value="${esc(c.role)}" oninput="uc('${c.id}','role',this.value)" placeholder="Principal, recruiter…"/></div>
+    <div class="f"><label>Email</label><input type="email" value="${esc(c.email)}" oninput="uc('${c.id}','email',this.value)" placeholder="email@firm.com"/></div>
+    <div class="f"><label>LinkedIn URL</label><input value="${esc(c.linkedin)}" oninput="uc('${c.id}','linkedin',this.value)" placeholder="linkedin.com/in/…"/></div>
+    <div class="f"><label>How you know them</label>
+      <select onchange="uc('${c.id}','relType',this.value)">
+        <option value="">— select or type below —</option>
+        ${RT.map(t=>`<option value="${t}" ${c.relType===t?'selected':''}>${t}</option>`).join('')}
+      </select>
+    </div>
+  </div>
+  <div class="sec">Relationship</div>
+  <div class="tags" style="margin-bottom:12px">
+    ${Object.entries(CS).map(([k,v])=>`<button class="tag ${c.status===k?'on':''}" onclick="uc('${c.id}','status','${k}');this.closest('.tags').querySelectorAll('.tag').forEach(t=>t.classList.remove('on'));this.classList.add('on')">${v}</button>`).join('')}
+  </div>
+  <div class="fg">
+    <div class="f"><label>Follow-up date</label><input type="date" value="${c.followupDate||''}" onchange="uc('${c.id}','followupDate',this.value);renderContacts()"/></div>
+  </div>
+  ${c.followupDate?`<div class="fu-box ${due?'urg':''}"><span class="fu-lbl">Follow-up by</span><span class="fu-dt">${fmt(c.followupDate)}</span>${due?`<button class="btn btn-sm" onclick="uc('${c.id}','followupDate','');renderContacts()">Done</button>`:''}</div>`:''}
+  <hr class="div"/><div class="sec">Outreach log</div>
+  ${logH}
+  <div class="log-row">
+    <input type="date" id="ld-${c.id}" value="${new Date().toISOString().split('T')[0]}" style="width:140px;flex:none"/>
+    <textarea id="lm-${c.id}" placeholder="Message you sent or conversation notes…" style="min-height:56px"></textarea>
+  </div>
+  <div class="log-row" style="margin-top:5px">
+    <textarea id="lr-${c.id}" placeholder="Their reply (optional)…" style="min-height:44px"></textarea>
+    <button class="btn btn-sm btn-a" onclick="addLog('${c.id}')" style="align-self:flex-end">+ Log</button>
+  </div>
+  <hr class="div"/>
+  <div class="f" style="margin-bottom:13px"><label>Notes</label><textarea oninput="uc('${c.id}','notes',this.value)" placeholder="Background, what they said, next steps…">${esc(c.notes)}</textarea></div>
+  <div class="card-act">
+    <button class="btn btn-sm" onclick="openMtgModalFor('${c.id}')" style="margin-right:auto">+ Schedule meeting</button>
+    <button class="btn btn-sm" onclick="delC('${c.id}')" style="color:var(--red)">Delete</button>
+  </div>
+</div></div>`;
+}
+
+function renderContacts(){
+  upCS();
+  const list=document.getElementById('contacts-list');
+  const f=cf==='all'?contacts:contacts.filter(c=>c.status===cf);
+  if(!f.length){list.innerHTML=`<div class="empty"><p>No contacts yet.</p><small>Add people you're reaching out to above.</small></div>`;return;}
+  list.innerHTML=f.map(c=>cHTML(c)).join('');
+}
+
+// ═══ CALENDAR ═══
+async function syncGcal(){
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:1000,
+      mcp_servers:[{type:'url',url:'https://gcal.mcp.claude.com/mcp',name:'gcal'}],
+      system:`Fetch the user's upcoming Google Calendar events for the next 30 days. Return ONLY a JSON array, no markdown:
+[{"title":"","date":"YYYY-MM-DD","time":"HH:MM","location":"","description":""}]
+If no events, return [].`,
+      messages:[{role:'user',content:'Get my upcoming events for the next 30 days.'}]
+    })});
+    const d=await r.json();
+    let t=(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    t=t.replace(/```json|```/g,'').trim();
+    try{gcalEvents=JSON.parse(t);if(!Array.isArray(gcalEvents))gcalEvents=[];}catch(e){gcalEvents=[];}
+  }catch(e){gcalEvents=[];}
+  renderCal();
+}
+
+function openMtgModal(){
+  document.getElementById('m-title').value='';
+  document.getElementById('m-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('m-time').value='';
+  document.getElementById('m-contact').value='';
+  document.getElementById('m-job').value='';
+  document.getElementById('m-notes').value='';
+  document.getElementById('dl-contacts').innerHTML=contacts.map(c=>`<option value="${esc(c.name)}">`).join('');
+  document.getElementById('dl-jobs').innerHTML=jobs.map(j=>`<option value="${esc(j.company+(j.title?' — '+j.title:''))}">`).join('');
+  document.getElementById('mtg-modal').classList.add('open');
+}
+function openMtgModalFor(cid){const c=contacts.find(x=>x.id===cid);openMtgModal();if(c)document.getElementById('m-contact').value=c.name;}
+function closeMtgModal(){document.getElementById('mtg-modal').classList.remove('open');}
+function saveMtg(){
+  const m={id:uid(),title:document.getElementById('m-title').value.trim()||'Meeting',date:document.getElementById('m-date').value,time:document.getElementById('m-time').value,contact:document.getElementById('m-contact').value.trim(),job:document.getElementById('m-job').value.trim(),notes:document.getElementById('m-notes').value.trim(),done:false};
+  if(!m.date)return;
+  meetings.unshift(m);ds();closeMtgModal();renderCal();upCS();
+}
+function delMtg(id){meetings=meetings.filter(x=>x.id!==id);ds();renderCal();}
+
+function changeMonth(dir){calM+=dir;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}renderCal();}
+
+function renderCal(){
+  const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-mon-lbl').textContent=`${MN[calM]} ${calY}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const fd=new Date(calY,calM,1).getDay();
+  const dim=new Date(calY,calM+1,0).getDate();
+  const dip=new Date(calY,calM,0).getDate();
+  const evMap={};
+  const allEv=[
+    ...meetings.map(m=>({date:m.date,title:m.title,type:'t',id:m.id})),
+    ...gcalEvents.map(e=>({date:e.date,title:e.title,type:'g'})),
+    ...jobs.filter(j=>j.followupDate&&isDJ(j)).map(j=>({date:j.followupDate,title:`↩ ${j.company}`,type:'f'})),
+    ...contacts.filter(c=>c.followupDate&&isDC(c)).map(c=>({date:c.followupDate,title:`↩ ${c.name}`,type:'f'}))
+  ];
+  allEv.forEach(e=>{if(!evMap[e.date])evMap[e.date]=[];evMap[e.date].push(e);});
+  const DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let h=DN.map(d=>`<div class="cal-dn">${d}</div>`).join('');
+  for(let i=0;i<fd;i++){const day=dip-fd+1+i;h+=`<div class="cell om"><div class="cell-num">${day}</div></div>`;}
+  for(let d=1;d<=dim;d++){
+    const ds=`${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const cd=new Date(calY,calM,d);const isTod=cd.getTime()===today.getTime();
+    const evs=evMap[ds]||[];
+    const evH=evs.slice(0,2).map(e=>`<div class="ev ev-${e.type}" title="${esc(e.title)}">${esc(e.title)}</div>`).join('')+(evs.length>2?`<div style="font-size:10px;color:var(--text3)">+${evs.length-2}</div>`:'');
+    h+=`<div class="cell ${isTod?'today':''}"><div class="cell-num">${d}</div>${evH}</div>`;
+  }
+  const tot=fd+dim;const rem=tot%7===0?0:7-(tot%7);
+  for(let i=1;i<=rem;i++)h+=`<div class="cell om"><div class="cell-num">${i}</div></div>`;
+  document.getElementById('cal-grid').innerHTML=h;
+
+  const todStr=today.toISOString().split('T')[0];
+  const up=[
+    ...meetings.filter(m=>!m.done&&m.date>=todStr).map(m=>({...m,_t:'tracker'})),
+    ...gcalEvents.filter(e=>e.date>=todStr).map(e=>({...e,_t:'gcal'}))
+  ].sort((a,b)=>a.date.localeCompare(b.date)).slice(0,12);
+
+  const ul=document.getElementById('upcoming-list');
+  if(!up.length){ul.innerHTML=`<div class="empty" style="padding:2rem"><p>No upcoming events.</p><small>Schedule a meeting or sync Google Calendar.</small></div>`;document.getElementById('tb-cal').textContent='';return;}
+  ul.innerHTML=up.map(e=>{
+    const dd=new Date(e.date+'T12:00:00');
+    return`<div class="up-item">
+  <div class="up-dt"><div class="up-mo">${dd.toLocaleDateString('en-US',{month:'short'})}</div><div class="up-dy">${dd.getDate()}</div></div>
+  <div class="up-info">
+    <div class="up-ttl">${esc(e.title)}</div>
+    <div class="up-meta">${e.time?e.time+' · ':''}${e.contact?esc(e.contact)+' · ':''}${e.job?`<span style="color:var(--text3)">${esc(e.job)}</span>`:''}${e._t==='gcal'?`<span style="background:var(--blue-bg);color:var(--blue);border-radius:20px;padding:1px 7px;font-size:10px;margin-left:4px">Google Cal</span>`:''}</div>
+    ${e.notes?`<div style="font-size:12px;color:var(--text2);margin-top:3px">${esc(e.notes)}</div>`:''}
+  </div>
+  ${e._t==='tracker'?`<button class="btn btn-g btn-sm" onclick="delMtg('${e.id}')">✕</button>`:''}
+</div>`;
+  }).join('');
+  document.getElementById('tb-cal').textContent=up.filter(e=>new Date(e.date+'T12:00:00')<=new Date(today.getTime()+7*86400000)).length||'';
+}
+
+function ra(){renderJobs();renderContacts();renderCal();}
+document.getElementById('mtg-modal').addEventListener('click',function(e){if(e.target===this)closeMtgModal();});
+loadAll();syncGcal();
+</script>
+</body>
+</html>
