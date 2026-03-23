@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Butler Residence — Residential renovation construction documentation by Hasini Kadaru at Northline Architects.">
+<title>Butler Residence — Hasini Kadaru</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+
+#site-nav{position:fixed !important;top:0 !important;left:0 !important;right:0 !important;z-index:9999 !important;display:flex !important;justify-content:space-between !important;align-items:center !important;padding:1.2rem 3rem !important;background:rgba(247,244,239,0.97) !important;backdrop-filter:blur(12px) !important;border-bottom:1px solid #ddd9d3 !important;font-family:'Inter','Helvetica Neue',Arial,sans-serif !important;box-sizing:border-box !important;}
+#site-nav .nav-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:.02em;color:#1a1814;text-decoration:none;}
+#site-nav .nav-name span{font-weight:400;color:#2a5c8f;font-size:.78rem;font-family:'Inter',sans-serif;margin-left:.6rem;letter-spacing:.06em;}
+#site-nav ul{display:flex;gap:2.5rem;list-style:none;margin:0;padding:0;}
+#site-nav ul a{font-family:'Inter',sans-serif;font-size:.84rem;letter-spacing:.06em;font-weight:500;text-transform:uppercase;color:#4a4540;text-decoration:none;transition:color .2s;}
+#site-nav ul a:hover{color:#1a1814;}
+
+
+main{padding-top:0;}
+.project-hero{width:100%;aspect-ratio:21/9;overflow:hidden;}
+.project-hero img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;}
+.project-header{padding:3.5rem 3rem 2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;border-bottom:1px solid var(--rule);}
+.project-category{font-family:var(--mono);font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
+.project-title{font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.05;margin-bottom:1rem;}
+.project-subtitle{font-size:1rem;font-weight:300;color:var(--mid);max-width:560px;line-height:1.7;}
+.project-specs{display:grid;gap:.8rem;text-align:right;min-width:200px;}
+.spec-label{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+.spec-val{font-size:1rem;color:var(--ink);font-weight:400;}
+.project-body{display:grid;grid-template-columns:1fr 2.5fr;gap:0;border-bottom:1px solid var(--rule);}
+.project-sidebar{padding:3rem;border-right:1px solid var(--rule);}
+.sidebar-label{font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;display:block;}
+.sidebar-val{font-size:1rem;color:var(--mid);margin-bottom:1.8rem;line-height:1.6;}
+.tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(42,92,143,.2);padding:.2rem .6rem;display:inline-block;margin:.2rem .2rem 0 0;}
+.project-description{padding:3rem;}
+.project-description h2{font-size:1.6rem;font-weight:400;margin-bottom:1rem;color:var(--ink);}
+.project-description p{font-size:1.05rem;font-weight:300;color:var(--mid);line-height:1.85;margin-bottom:1.2rem;}
+.project-description h3{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:2rem 0 .6rem;}
+.drawing-gallery{padding:4rem 3rem;}
+.gallery-label{font-family:var(--mono);font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:flex;align-items:center;gap:1rem;}
+.gallery-label::after{content:'';flex:1;height:1px;background:var(--rule);}
+.gallery-disclaimer{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--faint);font-style:italic;margin-bottom:2rem;line-height:1.6;}
+.gallery-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:1px;}
+.gallery-grid-1{display:grid;grid-template-columns:1fr;border:1px solid var(--rule);margin-bottom:1px;}
+.gallery-item{background:var(--paper);overflow:hidden;}
+.gallery-item img{width:100%;display:block;object-fit:contain;background:white;padding:.5rem;}
+.gallery-item img.render{object-fit:cover;aspect-ratio:16/9;padding:0;}
+.gallery-caption{font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.8rem 1rem;border-top:1px solid var(--rule);background:var(--paper);}
+.project-process{display:grid;grid-template-columns:1fr 2.5fr;gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.page-disclaimer{padding:2rem 3rem;background:var(--warm);border-top:1px solid var(--rule);}
+.page-disclaimer p{font-family:var(--mono);font-size:.75rem;letter-spacing:.07em;color:var(--faint);line-height:1.8;font-style:italic;max-width:720px;}
+.project-nav{display:grid !important;grid-template-columns:1fr 1fr !important;border-top:1px solid #ddd9d3 !important;}
+.proj-nav-item{padding:2rem 3rem !important;text-decoration:none !important;color:inherit !important;transition:background .3s !important;display:block !important;}
+.proj-nav-item:hover{background:#f0ece4 !important;}
+.proj-nav-item+.proj-nav-item{border-left:1px solid #ddd9d3 !important;}
+.proj-nav-dir{font-family:'DM Mono',monospace !important;font-size:.8rem !important;letter-spacing:.12em !important;text-transform:uppercase !important;color:#8a8480 !important;margin-bottom:.4rem !important;}
+.proj-nav-title{font-size:1.25rem !important;font-weight:400 !important;color:#1a1814 !important;}
+
+
+.original-docs{padding:4rem 3rem;border-bottom:1px solid var(--rule);}
+.section-label{font-family:var(--mono);font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--rule);}
+.orig-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.orig-item{background:var(--paper);overflow:hidden;}
+.orig-item img{width:100%;display:block;object-fit:contain;background:#fdf9f4;padding:.5rem;}
+.orig-item.full{grid-column:1/-1;}
+.orig-caption{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.7rem 1rem;border-top:1px solid var(--rule);}
+.section-note{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--faint);margin-top:1.2rem;font-style:italic;line-height:1.6;}
+.gallery-item img{width:100%;height:500px;display:block;object-fit:contain;background:#f9f8f5;padding:.5rem;}
+
+
+/* ── HAMBURGER BUTTON ── */
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;flex-shrink:0;}
+.nav-toggle span{display:block;width:24px;height:2px;background:#1a1814;transition:transform .3s,opacity .3s;}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){
+  #site-nav{padding:1rem 1.5rem !important;}
+  #site-nav .nav-toggle{display:flex !important;}
+  #site-nav ul{display:none !important;position:fixed !important;top:57px !important;left:0 !important;right:0 !important;background:rgba(247,244,239,0.98) !important;backdrop-filter:blur(12px) !important;flex-direction:column !important;gap:0 !important;border-bottom:1px solid #ddd9d3 !important;z-index:9998 !important;}
+  #site-nav ul.open{display:flex !important;}
+  #site-nav ul li{border-bottom:1px solid #ddd9d3 !important;width:100% !important;}
+  #site-nav ul a{display:block !important;padding:1rem 1.5rem !important;font-size:.9rem !important;text-align:left !important;}
+  .project-header{grid-template-columns:1fr;}
+  .project-specs{text-align:left;}
+  .project-body,.project-process{grid-template-columns:1fr;}
+  .project-sidebar{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
+  .project-description,.drawing-gallery,.existing-conditions,.original-docs{padding:2rem 1.5rem;}
+  .gallery-grid-2,.orig-grid,.conditions-grid{grid-template-columns:1fr;}
+  .orig-item.full{grid-column:1;}
+  .page-disclaimer,.conditions-caption{padding:1.5rem;}
+  .project-nav{grid-template-columns:1fr !important;}
+  .proj-nav-item{padding:1.4rem 1.5rem !important;}
+  .proj-nav-item+.proj-nav-item{border-left:none !important;border-top:1px solid #ddd9d3 !important;text-align:left !important;}
+  .proj-nav-title{font-size:1rem !important;white-space:normal !important;}
+  .top-proj-nav{grid-template-columns:1fr !important;}
+  .top-proj-nav a{border-left:none !important;border-top:1px solid #ddd9d3 !important;text-align:left !important;padding:1rem 1.5rem !important;}
+  .top-proj-nav a:first-child{border-top:none !important;}
+  .top-proj-nav a div:last-child{font-size:1rem !important;}
+}
+
+</style>
+</head>
+<body>
+<header id="site-nav">
+  <a href="index.html" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="Hasini_Kadaru_Resume_2026" download="Hasini_Kadaru_Resume_2026.pdf" style="color:#1a1814;font-weight:600;">Resume</a></li>
+  </ul>
+</header>
+<div class="top-proj-nav" style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #ddd9d3;margin-top:4.6rem;">
+  <a href="project-cbna.html" style="padding:1.2rem 3rem;text-decoration:none;color:inherit;display:block;" onmouseover="this.style.background='#f0ece4'" onmouseout="this.style.background='transparent'">
+    <div style="font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#8a8480;margin-bottom:.2rem;">← Previous</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#1a1814;">CBNA 3300 Monroe</div>
+  </a>
+  <a href="work.html" style="padding:1.2rem 3rem;text-decoration:none;color:inherit;display:block;text-align:right;border-left:1px solid #ddd9d3;" onmouseover="this.style.background='#f0ece4'" onmouseout="this.style.background='transparent'">
+    <div style="font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#8a8480;margin-bottom:.2rem;">← Back to Work</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#1a1814;">All Projects</div>
+  </a>
+</div>
+
+<main>
+<div class="project-hero"><img src="images/butler-overlap.png" alt="Butler Residence — Existing + Proposed Overlay First Floor Plan"></div>
+<div class="project-header">
+  <div>
+    <p class="project-category">Residential Renovation · Northline Architects · 2025</p>
+    <h1 class="project-title">Butler Residence</h1>
+    <p class="project-subtitle">Two-story residential renovation — existing conditions redrawn in Revit from 1960s hand-drafted construction documents, producing floor plans, elevations, and an existing-proposed overlay as the baseline for a proposed addition scope in Rochester, NY.</p>
+  </div>
+  <div class="project-specs">
+    <div><div class="spec-label">Type</div><div class="spec-val">Residential Renovation</div></div>
+    <div><div class="spec-label">Software</div><div class="spec-val">Revit</div></div>
+    <div><div class="spec-label">Firm</div><div class="spec-val">Northline Architects</div></div>
+    <div><div class="spec-label">Year</div><div class="spec-val">2025</div></div>
+  </div>
+</div>
+<div class="project-body">
+  <aside class="project-sidebar">
+    <span class="sidebar-label">Role</span>
+    <div class="sidebar-val">Intern Architectural Designer — Revit redrawing from historic hand-drafted originals, existing conditions documentation, drawing coordination</div>
+    <span class="sidebar-label">Scope</span>
+    <div class="sidebar-val">First floor plan, second floor plan, basement plan, northeast elevation, southeast elevation, existing/proposed overlay, 3D massing model, drawing coordination and PDF production</div>
+    <span class="sidebar-label">Skills</span>
+    <div>
+      <span class="tag">Revit</span><span class="tag">Residential</span><span class="tag">As-Built Documentation</span>
+      <span class="tag">Existing Conditions</span><span class="tag">Floor Plans</span><span class="tag">Elevations</span>
+      <span class="tag">3D Massing</span><span class="tag">Drawing Coordination</span>
+    </div>
+  </aside>
+  <div class="project-description">
+    <h2>Project Overview</h2>
+    <p>The Butler Residence project involved redrawing and updating existing construction documents for a two-story single-family home in preparation for a residential renovation. The original construction drawings, produced in the 1960s by Charles Dye &amp; Sons Home Builders for Mr. &amp; Mrs. Donald Anderson (Job C-2869), were hand-drafted at 1/4" = 1'-0" and required careful interpretation and digital redrawing to bring the existing conditions into a current Revit format.</p>
+    <p>The work focused on accurately capturing the existing house geometry — basement plan, first floor plan with garage, and second floor with four bedrooms — as the baseline for proposed addition scope. An overlay drawing was produced to clearly communicate the relationship between existing and proposed conditions.</p>
+    <h3>Project Approach</h3>
+    <p>Redrawing from historic hand-drafted documents required close reading of original dimensions, construction notes, and material callouts. Floor plans were redrawn at current standard sheet sizes with consistent line weights, annotation styles, and drawing conventions while preserving all original dimension strings and room labels for accuracy.</p>
+  </div>
+</div>
+<div class="original-docs">
+  <div class="section-label">Original Construction Documents — 1960s</div>
+  <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:120px;display:flex;flex-direction:column;">
+      <div style="height:260px;background:#f5ede0;overflow:hidden;"><img src="images/butler-orig-p5.png" alt="Original First Floor Plan" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+      <div class="orig-caption">Original First Floor Plan · Hand-drafted</div>
+    </div>
+    <div style="flex:1;min-width:120px;display:flex;flex-direction:column;">
+      <div style="height:260px;background:#f5ede0;overflow:hidden;"><img src="images/butler-orig-p3.png" alt="Original Second Floor Plan" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+      <div class="orig-caption">Original Second Floor Plan · Hand-drafted</div>
+    </div>
+    <div style="flex:1;min-width:120px;display:flex;flex-direction:column;">
+      <div style="height:260px;background:#f5ede0;overflow:hidden;"><img src="images/butler-orig-p2.png" alt="Original Basement Plan" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+      <div class="orig-caption">Original Basement Plan · Hand-drafted</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+    <div style="flex:0 0 calc(33.33% - 4px);min-width:140px;display:flex;flex-direction:column;">
+      <div style="height:260px;background:#f5ede0;overflow:hidden;"><img src="images/butler-orig-p1.png" alt="Original Elevations" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+      <div class="orig-caption">Original Rear Elevation, Right Side, Section · Hand-drafted</div>
+    </div>
+    <div style="flex:0 0 calc(33.33% - 4px);min-width:140px;display:flex;flex-direction:column;">
+      <div style="height:260px;background:#f5ede0;overflow:hidden;"><img src="images/butler-orig-p4.png" alt="Original Front Elevation" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+      <div class="orig-caption">Original Front Elevation, Left Side + Plot Plan · Hand-drafted</div>
+    </div>
+  </div>
+  <p class="section-note">Original documents: A Residence for Mr. &amp; Mrs. Donald Anderson — Charles Dye &amp; Sons Home Builders · Job C-2869 · Architect: Donald A. Neel</p>
+</div>
+<div class="drawing-gallery">
+  <div class="gallery-label">Redrawn Revit Documents</div>
+  <p class="gallery-disclaimer">Redrawn in Revit from original 1960s construction documents at Northline Architects · Displayed for portfolio purposes</p>
+  <div class="gallery-grid-2">
+    <div class="gallery-item"><img src="images/butler-first-floor.png" alt="First Floor Plan redrawn"><div class="gallery-caption">First Floor Plan</div></div>
+    <div class="gallery-item"><img src="images/butler-second-floor.png" alt="Second Floor Plan redrawn"><div class="gallery-caption">Second Floor Plan</div></div>
+  </div>
+  <div class="gallery-grid-1"><div class="gallery-item"><img src="images/butler-basement.png" alt="Basement Plan redrawn"><div class="gallery-caption">Basement Plan</div></div></div>
+  <div class="gallery-grid-2">
+    <div class="gallery-item"><img src="images/butler-northeast-elev.png" alt="Northeast Elevation"><div class="gallery-caption">Northeast Elevation</div></div>
+    <div class="gallery-item"><img src="images/butler-southeast-elev.png" alt="Southeast Elevation"><div class="gallery-caption">Southeast Elevation</div></div>
+  </div>
+</div>
+<div class="project-process">
+  <aside class="project-sidebar"></aside>
+  <div class="project-description">
+    <h2>Documentation Scope</h2>
+    <p>Drawing production involved digitally redrawing the complete existing house from five original hand-drafted sheets in Revit — first floor plan, second floor plan, basement plan, and exterior elevations. All drawings were redrawn at current standards while preserving original dimensions and room configurations for as-built accuracy.</p>
+    <h3>Existing + Proposed Overlay</h3>
+    <p>An overlay drawing was prepared to communicate addition scope to the project team — placing the redrawn existing first floor plan in relationship with the proposed addition footprint. The overlay was produced as a reference document; proposed addition drawings were outside the scope of this internship contribution.</p>
+  </div>
+</div>
+<div class="page-disclaimer">
+  <p>Redrawn Revit documents produced at Northline Architects. Displayed here for portfolio purposes only. Hasini Kadaru contributed to this project as an Architectural Intern under licensed architect supervision. Original source documents are the property of Northline Architects.</p>
+</div>
+  <div class="project-nav">
+    <a href="project-cbna.html" class="proj-nav-item">
+      <div class="proj-nav-dir">← Previous</div>
+      <div class="proj-nav-title">CBNA 3300 Monroe</div>
+    </a>
+    <a href="work.html" class="proj-nav-item" style="text-align:right;">
+      <div class="proj-nav-dir">← Back to Work</div>
+      <div class="proj-nav-title">All Projects</div>
+    </a>
+  </div>
+</main>
+<footer>
+  <p>© 2026 Hasini Kadaru</p>
+  <p>www.hasinikadaru.com</p>
+</footer>
+<script>
+(function(){
+  var t=document.querySelector('.nav-toggle');
+  var m=document.querySelector('#site-nav ul');
+  if(!t||!m)return;
+  t.addEventListener('click',function(){t.classList.toggle('open');m.classList.toggle('open');});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){t.classList.remove('open');m.classList.remove('open');});});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contact Hasini Kadaru — Architectural Designer and Passive House Consultant based in Rochester, NY. Available for full-time roles starting May 2026.">
+<title>Contact — Hasini Kadaru</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+main { padding-top: 5.2rem; min-height: 90vh; display: flex; flex-direction: column; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; flex: 1; }
+.contact-left { padding: 5rem 3rem; border-right: 1px solid var(--rule); }
+.contact-left h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; }
+.contact-left h1 em { font-style: italic; color: var(--faint); }
+.contact-left p { font-size: .95rem; font-weight: 300; color: var(--mid); line-height: 1.8; margin-bottom: 2.5rem; max-width: 400px; }
+
+.contact-detail { margin-bottom: 2rem; }
+.detail-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.detail-val { font-size: 1rem; font-weight: 300; color: var(--ink); text-decoration: none; display: block; }
+.detail-val:hover { color: var(--accent); }
+.detail-sub { font-size: .82rem; color: var(--faint); font-weight: 300; margin-top: .1rem; }
+
+.availability { margin-top: 3rem; padding: 1.5rem; border: 1px solid var(--rule); background: var(--warm); }
+.avail-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.avail-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4a9a6a; margin-right: .5rem; position: relative; top: -1px; }
+.avail-val { font-size: .9rem; color: var(--ink); font-weight: 300; }
+
+.contact-right { padding: 5rem 3rem 5rem 4rem; }
+.contact-right h2 { font-size: 1.5rem; font-weight: 300; margin-bottom: 2.5rem; color: var(--ink); }
+
+.contact-form { display: flex; flex-direction: column; gap: 0; }
+.form-group { border-bottom: 1px solid var(--rule); padding: 1.4rem 0; position: relative; }
+.form-group:first-of-type { border-top: 1px solid var(--rule); }
+.form-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: .5rem; }
+.form-input, .form-textarea, .form-select { width: 100%; background: transparent; border: none; outline: none; font-family: var(--serif); font-size: 1rem; font-weight: 300; color: var(--ink); padding: .3rem 0; resize: none; }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--faint); }
+.form-textarea { min-height: 80px; line-height: 1.7; }
+.form-select { cursor: pointer; color: var(--mid); -webkit-appearance: none; }
+.form-select option { color: var(--ink); }
+
+.form-submit { margin-top: 1rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+.btn-submit { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--paper); background: var(--ink); border: none; padding: 1rem 2.5rem; cursor: pointer; transition: background .2s; }
+.btn-submit:hover { background: var(--accent); }
+.form-note { font-family: var(--mono); font-size: .58rem; letter-spacing: .08em; color: var(--faint); }
+
+.success-msg { display: none; background: var(--warm); border: 1px solid var(--rule); padding: 1.5rem; margin-top: 1.5rem; }
+.success-msg p { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; color: #4a9a6a; }
+
+@media(max-width:900px){
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 1.5rem; }
+  .contact-right { padding: 3rem 1.5rem; }
+  .btn-submit { width: 100%; text-align: center; }
+  .form-submit { flex-direction: column; gap: .8rem; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-name">Hasini Kadaru <span>CPHC</span></a>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a href="Hasini_Kadaru_Resume_2026" download="Hasini_Kadaru_Resume_2026.pdf" style="color:#1a1814;font-weight:600;">Resume</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h1>Let's work <em>together.</em></h1>
+      <p>I'm actively looking for full-time positions in architectural design and construction documentation — particularly at firms working in renovation, residential, or high-performance sustainable building types.</p>
+      <div class="contact-detail">
+        <div class="detail-label">Email</div>
+        <a href="mailto:hasinikadaru2369@gmail.com" class="detail-val">hasinikadaru2369@gmail.com</a>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-label">LinkedIn</div>
+        <a href="https://linkedin.com/in/hasinikadaru" target="_blank" class="detail-val">linkedin.com/in/hasinikadaru</a>
+      </div>
+      <div class="availability">
+        <div class="avail-label">Availability</div>
+        <div class="avail-val"><span class="avail-dot"></span>Available — May 2026 graduation · Open to relocation</div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <h2>Send a message</h2>
+      <form class="contact-form" action="https://formspree.io/f/maqpyppz" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="First and last name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="org">Firm / Organization</label>
+          <input class="form-input" type="text" id="org" name="organization" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject</label>
+          <select class="form-select" id="subject" name="subject">
+            <option value="">— Select one</option>
+            <option value="Job Opportunity">Job Opportunity</option>
+            <option value="Internship">Internship</option>
+            <option value="Project Inquiry">Project Inquiry</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Your message" required></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-submit">Send Message</button>
+          <span class="form-note">Typically respond within 24 hrs</span>
+        </div>
+      </form>
+      <div class="success-msg" id="successMsg">
+        <p>✓ Message sent — I'll be in touch soon.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Hasini Kadaru</p>
+  <p>www.hasinikadaru.com</p>
+</footer>
+
+<script>
+const form = document.querySelector('.contact-form');
+const successMsg = document.getElementById('successMsg');
+if(form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if(res.ok) {
+        form.reset();
+        successMsg.style.display = 'block';
+        btn.textContent = 'Sent ✓';
+      } else {
+        btn.textContent = 'Error — try email directly';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Error — try email directly';
+      btn.disabled = false;
+    }
+  });
+}
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.nav-links');
+if(navToggle && navMenu){
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  navMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navToggle.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+}
+</script>
+</body>
+</html>
