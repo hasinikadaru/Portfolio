@@ -204,13 +204,10 @@ footer p {
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── MOBILE ── */
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; flex-wrap: nowrap; }
   .nav-name { flex-shrink: 0; }
-
   .nav-toggle { display: flex; }
-
   .nav-links {
     display: none;
     position: fixed;
@@ -226,6 +223,5 @@ footer p {
   .nav-links.open { display: flex; }
   .nav-links li { border-bottom: 1px solid var(--rule); }
   .nav-links a { display: block; padding: 1rem 1.5rem; font-size: .9rem; }
-
   footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
 }
